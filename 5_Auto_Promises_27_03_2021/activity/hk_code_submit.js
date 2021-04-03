@@ -86,13 +86,20 @@ browserPromise.then(function(browserInstance){
 .catch(function(err){
     console.log(err);
 })
+
+
+// function waitAndClick(selector){
+//     return new Promise(function(resolve,reject){
+//         let selectorWaitPromise= gtab.waitForSelector
+//     })
+// }
 //HW: go to interview prep kit, go to warm up challenges, go to first question, go to editorial, unlock
-function questionSolver(){
-    return new Promise(function(resolve,reject){
-        //file read
-        fs.readFile("")
-        //file paste
-    })
-}
+// function questionSolver(){
+//     return new Promise(function(resolve,reject){
+//         //file read
+//         fs.readFile("")
+//         //file paste
+//     })
+// }
 console.log("After");
 
