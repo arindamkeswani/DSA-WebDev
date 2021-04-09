@@ -1,0 +1,69 @@
+let puppeteer = require("puppeteer");
+let { password, email } = require("../../secrets");
+let { codes } = require("./codes");
+let fs = require("fs");
+console.log("Before");
+(async function () {
+    let browserInstance = await puppeteer.launch({
+        headless: false,
+        defaultViewport: null,
+        args: ["--start-maximized",]
+    });
+    let newTab = await browserInstance.newPage();
+    await newTab.goto("https://www.hackerrank.com/auth/login?h_l=body_middle_left_button&h_r=login");
+    await newTab.type("#input-1", email, { delay: 200 });
+    await newTab.type("#input-2", password, { delay: 200 });
+    await newTab.click("button[data-analytics='LoginPassword']");
+    await waitAndClick(".card-content h3[title='Interview Preparation Kit']", newTab);
+    await waitAndClick("a[data-attr1='warmup']", newTab);
+    let url = newTab.url();
+    let questionObj = codes[0];
+    let fqsp = questionSolver(url, questionObj.soln, questionObj.qName, browserInstance);
+    // new production level -> async await 
+    for (let i = 1; i < codes.length; i++) {
+        fqsp = fqsp.then(function () {
+            return questionSolver(url, codes[i].soln,codes[i].qName, browserInstance);
+        })
+    }
+    await console.log("All questions submitted");;
+})();
+async function waitAndClick(selector, newTab) {
+    
+
+
+    await newTab.waitForSelector(selector, { visible: true });
+    // we didn't wait this promise because we want  the calling perspn to await this promise based async function 
+    let selectorClickPromise = newTab.click(selector);
+    return selectorClickPromise;
+}
+
+async function questionSolver(modulepageUrl, code, questionName, browserInstance){
+    let newTabb = await browserInstance.newPage();
+    await newTabb.goto(modulepageUrl);
+    function browserconsolerunFn(questionName) {
+        let allH4Elem = document.querySelectorAll("h4");
+        let textArr = [];
+        for (let i = 0; i < allH4Elem.length; i++) {
+            let myQuestion = allH4Elem[i]
+                .innerText.split("\n")[0];
+            textArr.push(myQuestion);
+        }
+        let idx = textArr.indexOf(questionName);
+        console.log(idx);
+        console.log("hello");
+        allH4Elem[idx].click();
+    }
+
+    await newTabb.evaluate(browserconsolerunFn, questionName);
+    await waitAndClick(".custom-checkbox.inline", newTabb);
+    await newTabb.type(".custominput", code);
+    await newTabb.keyboard.down("Control");
+    await newTabb.keyboard.press("a");
+    await newTabb.keyboard.press("x");
+    await newTabb.click(".monaco-editor.no-user-select.vs");
+    await newTabb.keyboard.press("a");
+    await newTabb.keyboard.press("v");
+    await newTabb.click(".pull-right.btn.btn-primary.hr-monaco-submit");
+
+
+}

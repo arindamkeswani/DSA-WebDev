@@ -24,7 +24,4 @@ frP.then(function(data){
 });
 
 frP.catch(function(err){
-    console.log("err->"+err);
-});
-
-console.log("After");
+    console.log("errnode
