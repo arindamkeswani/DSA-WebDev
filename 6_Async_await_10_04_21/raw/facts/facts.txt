@@ -1,0 +1,6 @@
+async await is syntax sugar for consuming promises
+
+await-alternative for .then()
+
+await will wait for async function
+JS Stack will not wait (as async blocks the stack) and execute the rest of the code
