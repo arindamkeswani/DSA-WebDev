@@ -55,7 +55,7 @@ public class Main {
         for(Node child: node.children){
             int cht = diameter(child);
             
-            if(cht>lh){ //update largest and secong largest height
+            if(cht>lh){ //update largest and second largest height
                 slh=lh;
                 lh=cht;
             }else if(cht>slh){
