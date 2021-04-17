@@ -14,7 +14,7 @@ var summarize = require("text-summary");
 (async function () {
     try {
         let browserInstance = await puppeteer.launch({
-            headless: false,
+            headless: true,
             defaultViewport: null,
             args: ["--start-maximized"]
         });
@@ -42,6 +42,7 @@ var summarize = require("text-summary");
 
 async function getLinksFromGoogle(link, browserInstance, query) {
     let newTab = await browserInstance.newPage();
+    await newTab.setDefaultNavigationTimeout(0); 
     await newTab.goto(link);
     await newTab.type("input[type='text'][aria-label='Search']", query, { delay: 100 });
     await newTab.keyboard.press('Enter');
@@ -57,38 +58,50 @@ async function getLinksFromGoogle(link, browserInstance, query) {
         }
         else{
             // console.log(html);
-            await printTopArtName(html,browserInstance);
+            await printTopArtName(html,browserInstance,query);
         }
     }
 }
 
 
 
-async function printTopArtName(html,browserInstance){
-    let selectorTool=await cheerio.load(html);
-    let newsArray= await selectorTool(".ipQwMb.ekueJc.RD0gLb a");
+async function printTopArtName(html,browserInstance,query){
+    let selectorTool= cheerio.load(html);
+    let newsArray=  selectorTool(".ipQwMb.ekueJc.RD0gLb a");
     // console.log(newsArray);
     // for(let i=0;i<newsArray.length;i++){
     let linkArray = []
     for(let i=0;i<5;i++){
-        let link =await selectorTool(newsArray[i]).attr("href");
-        // let topicname = selectorTool(topicsArray[i]).text();
-        let fulllink= "https://www.news.google.com"+link.substring(1,);
+        let link =selectorTool(newsArray[i]).attr("href");
+        let heading =selectorTool(newsArray[i]).text();
+        
+        let fulllink= await "https://www.news.google.com"+link.substring(1,);
 
         // processArtPage(fulllink);
         // getSum(fulllink, browserInstance);
-        await linkArray.push(fulllink)
+        linkArray.push({fulllink,heading})
         // console.log(fulllink);
     }
+    
+    // console.log(linkArray[0]["heading"]); //retieve heading at index 0
+    let ans= "";
+    for(let i=0;i<linkArray.length;i++){
+        // let ans_temp = await getSum(linkArray[i],browserInstance);
+        // ans+=await ans+ ans_temp;
+        ans= ans+ (i+1);
+        ans= ans+ "\n\nTitle: " + linkArray[i]["heading"];
+        ans= ans+ "\n\nSource: " + linkArray[i]["fulllink"];
+        var singleContent = await getSum(linkArray[i]["fulllink"], browserInstance);
+        ans+="\n\n"+singleContent;
 
-    let ans="";
-    for(let i=0;i<5;i++){
-        let ans_temp = await getSum(linkArray[i],browserInstance);
-        ans+=ans_temp;
+        console.log("Article",i+1,"fetchecd");
     }
    
-    console.log(ans);
-    return ans;
+    await console.log("Completed");
+    await console.log(ans);
+
+    await createOP(ans,query);
+    // return ans;
 }
 
 // function processArtPage(url){
@@ -108,39 +121,45 @@ async function getSum(url,browserInstance){
     // let artText = selTool(artContent).text();
     // console.log(artContent);
     // // console.log(artText);
-    var summarize = require("text-summary");
+    var summarize = await require("text-summary");
     let newP = await browserInstance.newPage();
     await newP.setDefaultNavigationTimeout(0); 
     await newP.goto(url);
-    // await newP.waitForNavigation({waitUntil:"load"});
-
+    // await newP.waitForNavigation({waitUntil:"domcontentloaded"});
+    await newP.waitForSelector("p", 0);
     // await Promise.all([
     //     newP.waitForNavigation({waitUntil:"domcontentloaded"}), // The promise resolves after navigation has finished
     //     newP.goto(url), // Clicking the link will indirectly cause a navigation
     //   ]);
     
     
-    // await newP.waitFor(10000);
+    // await newP.waitFor(15000);
     
-    function consoleFn(sel) {
-        let t = document.querySelectorAll(sel);
+    async function consoleFn(sel) {
+        let t = await document.querySelectorAll(sel);
         
         // let PName = document.querySelectorAll(pNameSelector);
         let details=""
         // let details = [];
-        for (let i = 0; i < t.length; i++) {
-            let text = t[i].innerText;
-            
-           details+=text+"\n\n";
+        if(t!=undefined){
+            for (let i = 0; i < t.length; i++) {
+                let text = await t[i].innerText;
+                
+               details = await details + text+"\n\n";
+            }
+            return details;
         }
-        return details;
+        else{
+            return "Unable to retrieve data from",url;
+        }
+        
         
     }
 
     // let artText = newP.evaluate(consoleFn,"p")
     // console.log(artText);
     let artText =await newP.evaluate(consoleFn,"p")
-    var numberSentences = 5;
+    var numberSentences = await 10;
     var summary = await summarize.summary(artText, numberSentences);
 
     // var Res=await summary.split(".");
@@ -149,14 +168,16 @@ async function getSum(url,browserInstance){
     //     s+=Res[i]+"\n\n";
     // }
 
-    summary+="\n_____________________________________________________"
-    console.log(summary);
-    // return summary;
+    summary=await summary + "\n_____________________________________________________\n\n"
+    // await console.log(summary);
+    return await summary;
 
     
 }
 
-
+async function createOP(ans,query){
+    
+}
 
 //SUMMARIZE THE TEXT
 // 
