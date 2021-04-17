@@ -29,3 +29,5 @@ node jarvis.js "Your topic of choice"
 
 Raw folder contains random test files and hold no relevance to the main project
 jarvis.js in the main file that should be run.
+
+A lot of extra awaits have been added. This was for test purposes and their presence does not really affect the functioning. So feel free to ignore them. 
