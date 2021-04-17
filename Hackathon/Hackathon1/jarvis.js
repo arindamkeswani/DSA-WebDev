@@ -14,7 +14,7 @@ var summarize = require("text-summary");
 (async function () {
     try {
         let browserInstance = await puppeteer.launch({
-            headless: true,
+            headless: false,
             defaultViewport: null,
             args: ["--start-maximized"]
         });
@@ -176,7 +176,17 @@ async function getSum(url,browserInstance){
 }
 
 async function createOP(ans,query){
-    
+    // let pathFolder= await path.join(__dirname,query);
+    // if(fs.existsSync(pathFolder)==false){
+    //     fs.mkdirSync(pathFolder);
+    // }
+
+    let filePath = path.join(__dirname, query+".pdf");
+    let pdfDoc = new PDFDocument;
+    pdfDoc.pipe(fs.createWriteStream(filePath));
+    pdfDoc.text(JSON.stringify(ans));
+    pdfDoc.end();
+
 }
 
 //SUMMARIZE THE TEXT
