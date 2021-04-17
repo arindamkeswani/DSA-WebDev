@@ -1,6 +1,7 @@
 let puppeteer = require("puppeteer");
 let fs = require("fs");
 let url = "https://news.google.com/";
+let url2 = "https://www.aljazeera.com/";
 let query = process.argv[2];
 
 let request=require("request");
@@ -18,11 +19,13 @@ var Sentiment = require('sentiment');
 (async function () {
     try {
         let browserInstance = await puppeteer.launch({
-            headless: true,
+            headless: false,
             defaultViewport: null,
             args: ["--start-maximized"]
         });
+        await getLinksFromAlJ(url2, browserInstance, query, os, Sentiment);
         await getLinksFromGoogle(url, browserInstance, query, os, Sentiment);
+        
 
 
     } catch (err) {
@@ -81,19 +84,19 @@ async function printTopArtName(html,browserInstance,query, os, Sentiment){
     for(let i=0;i<linkArray.length;i++){
         // let ans_temp = await getSum(linkArray[i],browserInstance);
         // ans+=await ans+ ans_temp;
-        ans= ans+ (i+1);
+        ans= ans+ (i+1)+".";
         ans= ans+"\n\nTitle: " + linkArray[i]["heading"];
         ans= ans+"\n\nSource: " + linkArray[i]["fulllink"];
         var singleContent = await getSum(linkArray[i]["fulllink"], browserInstance,os, Sentiment);
         ans+="\n\n"+singleContent;
 
-        console.log("Article",i+1,"fetched");
+        console.log("Article",i+1,"fetched (Google)");
     }
    
     await console.log("Completed");
     await console.log(ans);
 
-    await createOP(ans,query);
+    await createOP(ans,"Google News",query);
     // return ans;
 }
 
@@ -107,6 +110,83 @@ async function printTopArtName(html,browserInstance,query, os, Sentiment){
 //         }
 //     }
 // }
+
+
+
+async function getLinksFromAlJ(link, browserInstance, query, os, Sentiment) {
+    let newTab = await browserInstance.newPage();
+    await newTab.setDefaultNavigationTimeout(0); 
+    await newTab.goto(link);
+    await newTab.waitFor(15000);
+    await newTab.click(".icon.icon--search");
+    // await newTab.waitFor(200);
+    await newTab.waitForSelector("input[type='search']");
+    await newTab.type("input[type='search']", query, { delay: 100 });
+    await newTab.keyboard.press('Enter');
+    await newTab.waitFor(2000);
+    let url = await newTab.url();
+   
+    request(url, cb)
+
+    
+    async function cb(error, response, html){
+        if(error){
+            console.log(error);
+        }
+        else{
+            // console.log(html);
+            await printTopArtAlj(html,browserInstance,query, os, Sentiment);
+        }
+    }
+}
+
+
+
+async function printTopArtAlj(html,browserInstance,query, os, Sentiment){
+    var os = require("os");
+    let selectorTool= cheerio.load(html);
+    let newsArray=  selectorTool(".gc__title a");
+    // console.log(newsArray);
+    // for(let i=0;i<newsArray.length;i++){
+    let linkArray = []
+    for(let i=0;i<5;i++){
+        let link =selectorTool(newsArray[i]).attr("href");
+        let heading =selectorTool(newsArray[i]).text();
+        
+        let fulllink= await link;
+
+        // processArtPage(fulllink);
+        // getSum(fulllink, browserInstance);
+        linkArray.push({fulllink,heading})
+        // console.log(fulllink);
+    }
+    await console.log("Top 5 links retrieved");
+    // console.log(linkArray[0]["heading"]); //retieve heading at index 0
+    // console.log(linkArray);
+    let ans= "";
+    for(let i=0;i<linkArray.length;i++){
+        // let ans_temp = await getSum(linkArray[i],browserInstance);
+        // ans+=await ans+ ans_temp;
+        ans= ans+ (i+1)+".";
+        ans= ans+"\n\nTitle: " + linkArray[i]["heading"];
+        ans= ans+"\n\nSource: " + linkArray[i]["fulllink"];
+        var singleContent = await getSum(linkArray[i]["fulllink"], browserInstance,os, Sentiment);
+        ans+="\n\n"+singleContent;
+
+        console.log("Article",i+1,"fetched (Al Jazeera)");
+    }
+   
+    await console.log("Completed");
+    await console.log(ans);
+
+    await createOP(ans,"AlJazeera",query);
+    return ans;
+}
+
+
+
+
+
 
 async function getSum(url,browserInstance, os,Sentiment){
     // let selTool = cheerio.load(html);
@@ -183,13 +263,13 @@ async function getSum(url,browserInstance, os,Sentiment){
     
 }
 
-async function createOP(ans,query){
-    // let pathFolder= await path.join(__dirname,query);
-    // if(fs.existsSync(pathFolder)==false){
-    //     fs.mkdirSync(pathFolder);
-    // }
+async function createOP(ans,fold,query){
+    let pathFolder= await path.join(__dirname,fold);
+    if(fs.existsSync(pathFolder)==false){
+        fs.mkdirSync(pathFolder);
+    }
 
-    let filePath = path.join(__dirname, query+".pdf");
+    let filePath = path.join(__dirname,fold, query+".pdf");
     let pdfDoc = new PDFDocument;
     pdfDoc.pipe(fs.createWriteStream(filePath));
     pdfDoc.text(ans);
