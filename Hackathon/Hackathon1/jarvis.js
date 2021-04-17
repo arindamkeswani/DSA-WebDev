@@ -12,6 +12,9 @@ let PDFDocument= require('pdfkit');
 var summarize = require("text-summary");
 var os = require("os");
 
+var Sentiment = require('sentiment');
+
+
 (async function () {
     try {
         let browserInstance = await puppeteer.launch({
@@ -19,7 +22,7 @@ var os = require("os");
             defaultViewport: null,
             args: ["--start-maximized"]
         });
-        await getLinksFromGoogle(url, browserInstance, query, os);
+        await getLinksFromGoogle(url, browserInstance, query, os, Sentiment);
 
 
     } catch (err) {
@@ -29,7 +32,7 @@ var os = require("os");
 
 
 
-async function getLinksFromGoogle(link, browserInstance, query, os) {
+async function getLinksFromGoogle(link, browserInstance, query, os, Sentiment) {
     let newTab = await browserInstance.newPage();
     await newTab.setDefaultNavigationTimeout(0); 
     await newTab.goto(link);
@@ -47,14 +50,14 @@ async function getLinksFromGoogle(link, browserInstance, query, os) {
         }
         else{
             // console.log(html);
-            await printTopArtName(html,browserInstance,query, os);
+            await printTopArtName(html,browserInstance,query, os, Sentiment);
         }
     }
 }
 
 
 
-async function printTopArtName(html,browserInstance,query, os){
+async function printTopArtName(html,browserInstance,query, os, Sentiment){
     var os = require("os");
     let selectorTool= cheerio.load(html);
     let newsArray=  selectorTool(".ipQwMb.ekueJc.RD0gLb a");
@@ -81,7 +84,7 @@ async function printTopArtName(html,browserInstance,query, os){
         ans= ans+ (i+1);
         ans= ans+"\n\nTitle: " + linkArray[i]["heading"];
         ans= ans+"\n\nSource: " + linkArray[i]["fulllink"];
-        var singleContent = await getSum(linkArray[i]["fulllink"], browserInstance,os);
+        var singleContent = await getSum(linkArray[i]["fulllink"], browserInstance,os, Sentiment);
         ans+="\n\n"+singleContent;
 
         console.log("Article",i+1,"fetched");
@@ -105,12 +108,14 @@ async function printTopArtName(html,browserInstance,query, os){
 //     }
 // }
 
-async function getSum(url,browserInstance,os){
+async function getSum(url,browserInstance, os,Sentiment){
     // let selTool = cheerio.load(html);
     // let artContent= selTool("<p>")
     // let artText = selTool(artContent).text();
     // console.log(artContent);
     // // console.log(artText);
+    
+    var sentiment = new Sentiment();
     try{
         var summarize = await require("text-summary");
         let newP = await browserInstance.newPage();
@@ -151,22 +156,28 @@ async function getSum(url,browserInstance,os){
         // let artText = newP.evaluate(consoleFn,"p")
         // console.log(artText);
         let artText =await newP.evaluate(consoleFn,"p",os)
+
+        var sent = await sentiment.analyze(artText);
+
+        let noOfWordsOrig = await artText.split(" ").length;
+
         var numberSentences = await 10;
         var summary = await summarize.summary(artText, numberSentences);
 
-        // var Res=await summary.split(".");
-        // var s=""
-        // for(let i=0;i<Res.length;i++){
-        //     s+=Res[i]+"\n\n";
-        // }
-
-        summary=await summary + "\n\n_____________________________________________________\n\n";
+        
+        let noOfWordsSum = summary.split(" ").length;
+        summary=await summary + "\n\nNumber of words in the original article: "+noOfWordsOrig;
+        summary=await summary + "\n\nNumber of words in the summarized article: "+noOfWordsSum;
+        summary=await summary + "\n\nSentiment (less than 0 for negative, more than 0 for positive): "+sent.score;
+        
+        summary+="\n\n_____________________________________________________\n\n";
         // await console.log(summary);
         return await summary;
 
     }catch(err){
         console.log(err);
-        return "Unable to retrieve data, but here's the link!--> "+ url+"\n\n_____________________________________________________\n\n";
+        // return "Unable to retrieve data, but here's the link!--> "+ url+"\n\n_____________________________________________________\n\n";
+        return "Unable to retrieve data from this source, please visit the link to view the complete article."
     }
     
     
