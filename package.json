@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",
+    "natural": "^5.0.3",
     "pdfkit": "^0.11.0",
     "puppeteer": "^8.0.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "text-summary": "^2.0.4"
   },
   "name": "pepcoding",
   "version": "1.0.0",
