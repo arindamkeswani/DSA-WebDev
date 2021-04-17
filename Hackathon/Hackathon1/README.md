@@ -26,3 +26,6 @@ node jarvis.js "Your topic of choice"
 
 -To avoid opening Chromium tabs, set headless property to "true".
 -Since CSS selectors can be dynamic, one might want to update them regularly.
+
+Raw folder contains random test files and hold no relevance to the main project
+jarvis.js in the main file that should be run.
