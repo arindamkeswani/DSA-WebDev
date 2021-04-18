@@ -2,14 +2,23 @@ Problem Statement:
 Summarizing and analyzing top 5 news articles using Puppeteer & Cheerio (Node JS)
 
 Objectives:
+
 -Get top 5 Articles from Google News based on user query
+
 -Get top 5 Articles from Al Jazeera based on user query
+
 -Summarize the text of each article
+
 -Get a comparison of the total number of words in the original article vs the summarized article
+
 -Analyze the sentiment of the original article
+
 -Make separate folders for Google News and Al Jazeera
+
 -Write all the above content in a PDF file
+
 -Put all files in the respective source folder
+
 
 Technologies/Libraries/Concepts used:
 -Node JS
