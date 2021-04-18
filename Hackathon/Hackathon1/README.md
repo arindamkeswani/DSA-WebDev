@@ -37,7 +37,7 @@ Technologies/Libraries/Concepts used:
 -pdfkit
 
 _______________________________________________________________________________________________
-=To run the code, simply open the directory of the .js file and type the following in the terminal:
+-To run the code, simply open the directory of the .js file and type the following in the terminal:
 
 node jarvis.js "Your topic of choice"
 _______________________________________________________________________________________________
@@ -48,4 +48,8 @@ ________________________________________________________________________________
 Raw folder contains random test files and hold no relevance to the main project
 jarvis.js in the main file that should be run.
 _______________________________________________________________________________________________
-A lot of extra awaits have been added. This was for test purposes and their presence does not really affect the functioning. So feel free to ignore them. 
+A lot of extra awaits have been added. This was for test purposes and their presence does not really affect the functioning. So feel free to ignore them.
+_______________________________________________________________________________________________
+Project video link:
+
+https://www.youtube.com/watch?v=0iODXmcvg9o&t=2s
