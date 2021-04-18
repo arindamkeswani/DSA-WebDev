@@ -50,6 +50,8 @@ jarvis.js in the main file that should be run.
 _______________________________________________________________________________________________
 A lot of extra awaits have been added. This was for test purposes and their presence does not really affect the functioning. So feel free to ignore them.
 _______________________________________________________________________________________________
+Inconsistencies in one or two article retrievals per query are expected as different websites behave uniquely, therefore it is infeasible to have a common solution for each of them that works every time.
+_______________________________________________________________________________________________
 Project video link:
 
 https://www.youtube.com/watch?v=0iODXmcvg9o&t=2s
