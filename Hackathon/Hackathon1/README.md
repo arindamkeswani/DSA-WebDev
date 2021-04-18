@@ -42,7 +42,7 @@ ________________________________________________________________________________
 node jarvis.js "Your topic of choice"
 _______________________________________________________________________________________________
 -To avoid opening Chromium tabs, set headless property to "true".
-_
+_______________________________________________________________________________________________
 -Since CSS selectors can be dynamic, one might want to update them regularly.
 _______________________________________________________________________________________________
 Raw folder contains random test files and hold no relevance to the main project
