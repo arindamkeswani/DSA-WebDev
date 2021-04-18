@@ -1,6 +1,6 @@
 Problem Statement:
 Summarizing and analyzing top 5 news articles using Puppeteer & Cheerio (Node JS)
-
+_______________________________________________________________________________________________
 Objectives:
 
 -Get top 5 Articles from Google News based on user query
@@ -19,7 +19,7 @@ Objectives:
 
 -Put all files in the respective source folder
 
-
+_______________________________________________________________________________________________
 Technologies/Libraries/Concepts used:
 -Node JS
 -cheerio
@@ -28,15 +28,15 @@ Technologies/Libraries/Concepts used:
 -Sentiment
 -Async await
 -pdfkit
-
+_______________________________________________________________________________________________
 =To run the code, simply open the directory of the .js file and type the following in the terminal:
 
 node jarvis.js "Your topic of choice"
-
+_______________________________________________________________________________________________
 -To avoid opening Chromium tabs, set headless property to "true".
 -Since CSS selectors can be dynamic, one might want to update them regularly.
-
+_______________________________________________________________________________________________
 Raw folder contains random test files and hold no relevance to the main project
 jarvis.js in the main file that should be run.
-
+_______________________________________________________________________________________________
 A lot of extra awaits have been added. This was for test purposes and their presence does not really affect the functioning. So feel free to ignore them. 
