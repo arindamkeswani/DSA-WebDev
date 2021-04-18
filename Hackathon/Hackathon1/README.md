@@ -1,5 +1,5 @@
 Problem Statement:
-Automatic news gathering from the internet
+Summarizing and analyzing top 5 news articles using Puppeteer & Cheerio (Node JS)
 
 Objectives:
 -Get top 5 Articles from Google News based on user query
