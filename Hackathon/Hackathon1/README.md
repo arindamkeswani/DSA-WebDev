@@ -21,13 +21,21 @@ Objectives:
 
 _______________________________________________________________________________________________
 Technologies/Libraries/Concepts used:
+
 -Node JS
+
 -cheerio
+
 -puppetteer
+
 -text-summary
+
 -Sentiment
+
 -Async await
+
 -pdfkit
+
 _______________________________________________________________________________________________
 =To run the code, simply open the directory of the .js file and type the following in the terminal:
 
