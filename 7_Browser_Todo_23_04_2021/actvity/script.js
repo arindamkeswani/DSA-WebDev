@@ -100,8 +100,8 @@ function createTask(color,task, x){
         tFilter[i].addEventListener("click", function () {
             // console.log(Math.floor(Math.random() * 4));
 
-            let ColList = ["rgb(247, 184, 194)", "rgb(108, 108, 240)", "rgb(106, 175, 106)", "rgb(106, 175, 106)"];
-            tFilter[i].style.backgroundColor = ColList[colWheel%ColList.length];
+            let ColList = ["rgb(247, 184, 194)", "rgb(108, 108, 240)", "rgb(106, 175, 106)", "rgb(20, 20, 20)"];
+            tFilter[i].style.backgroundColor = ColList[colWheel%(ColList.length+1)];
             colWheel++;
         })
         
