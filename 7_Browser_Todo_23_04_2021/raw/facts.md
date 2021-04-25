@@ -11,8 +11,10 @@ update: appendChild() -> will update tree to add element at the end of the paren
 delete: d.remove() 
 
 --------------
+Think of the page in terms of boxes
+--------------
 Margin->border->padding->element
-
+--------------
 box-sizing: border-box ->removes padding 
 
 .inline ->height and cant be set (Eg: in span). They only take up the required space, but padding and margin can be given   
@@ -30,6 +32,25 @@ inline-block-> input type properties are inline block
 display:flex ->makes elements flexible
     ->justify-content: for horizontal
     ->align-items: for vertical
+--------------
+flex-direction: column or row (justify-content and align items will work accordingly) ->default row
+
+flex-wrap: will retain original dimensions and move extra elements to next row/column
+------------------
+
+Positioning:
+Static: Default
+
+Relative: Move relative to original position
+Prefer moving top and left instead of right and bottom
+Occupies original position
+
+Absolute: Makes a new layer
+top,left: new layer
+does not occupy original position
+if parent is relative, and child absolute then child is bound to parent box
 
 
-Think of the page in terms of boxes
+------------------
+
+

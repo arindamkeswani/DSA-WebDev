@@ -19,9 +19,9 @@ body{
 .filter-container{
     height:60%;
     /* border: 1px solid red; */
-    width:14rem;
+    width:16rem;
     margin-right:4rem;
-    margin-left:10rem;
+    margin-left:10%;
     border-radius: 0.2rem;
     background-color: #6d7c7e;
     display:flex;
@@ -30,6 +30,7 @@ body{
 }
 .filter{
     height:100%;
+
     width:25%;
     /* border:1px solid red; */
     display: flex;
@@ -45,19 +46,19 @@ body{
 }
 
 .pink{
-    background-color: pink;
+    background-color: rgb(247, 184, 194);
 }
 
 .blue{
-    background-color: blue;
+    background-color: rgb(108, 108, 240);
 }
 
 .green{
-    background-color: green;
+    background-color: rgb(106, 175, 106);
 }
 
 .black{
-    background-color: black;
+    background-color: rgb(20, 20, 20);
 }
 .action-container{
     height:60%;
@@ -80,8 +81,90 @@ body{
 
 .fas{
     font-size: 1.5rem;
+    color:white;
 }
 
+
+
+/* modal foramtting */
+
+.modal_container{
+    position:absolute;
+    height:18rem;
+    width:36rem;
+    background-color: brown;
+    margin-left:30%;
+    left:3vw;
+    top:30vh;
+    display:flex;
+    justify-content: center;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.698);
+}
+
+.input_container{
+    height:100%;
+    width:73%;
+}
+
+.modal_input{
+    height: 100%;
+    width:100%;
+    outline:none;
+    padding: 2rem 3rem;
+    font-family: "Raleway", sans-serif;
+    font-size: 1.5rem;
+    /*  line between space */
+    line-height: 145%;
+    font-weight: 400;
+}
+
+.modal_filter_container{
+    width:27%;
+    background-color: #444;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* gap:2rem; */
+    align-items: center;
+    padding: 1.7rem 1.2rem;
+   }
+
+.modal_filter_container>.filter{
+    height: 15%; 
+    width:60%
+}
+
+.border{
+    border:0.2rem solid white;
+}
+ /* task formatting */
 .main-container{
-    height: 85vh;
+    height: 90vh;
+    padding-top: 2rem;
+    padding-left: 3rem;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.task_filter{
+    height: 7%;
+}
+.task_container{
+    border: solid black;
+    border-width:0.2rem;
+    border-radius: 0.2rem;
+    margin:0 auto;
+    height: 10rem;
+    width:16rem;
+    background-color: #fff;
+}
+.task_desc_container{
+    padding-left:0.5rem;
+}
+.task_desc{
+    text-align: center;
+}
+.uid{
+    color: #444;
 }
