@@ -53,4 +53,18 @@ if parent is relative, and child absolute then child is bound to parent box
 
 ------------------
 
+event.currentTarget is the portion on which listener is added
+event.target is the portion on which changes are made
 
+------------------
+
+Overflow: visible (will show full content)
+        : hidden (Hides extra content) 
+        : auto (Adds scroll bar as necessary)
+        : scroll (Adds both hori and vert scroll bars)
+
+------------------
+word-break:break-all; //good for single words which might cause problem in Overflow property
+------------------
+contenteditable="true" enables user to edit text inside the div
+readonly makes input box uneditable

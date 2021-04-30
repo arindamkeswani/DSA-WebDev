@@ -5,6 +5,7 @@
 
 body{
     margin:0px;
+    background-color: #f1f2f6;
     
 }
 .toolbar{
@@ -84,6 +85,9 @@ body{
     color:white;
 }
 
+.active{
+    background-color: #434a4d;
+}
 
 
 /* modal foramtting */
@@ -94,7 +98,7 @@ body{
     width:36rem;
     background-color: brown;
     margin-left:30%;
-    left:3vw;
+    left: calc((40vw - 36rem)/2);
     top:30vh;
     display:flex;
     justify-content: center;
@@ -151,20 +155,28 @@ body{
     height: 7%;
 }
 .task_container{
-    border: solid black;
-    border-width:0.2rem;
+    /* border: solid black; */
+    /* border-width:0.2rem; */
     border-radius: 0.2rem;
     margin:0 auto;
     height: 10rem;
     width:16rem;
     background-color: #fff;
+    font-family: "Raleway", sans-serif;
+    
 }
 .task_desc_container{
     padding-left:0.5rem;
+    height: 80%;
+    
 }
 .task_desc{
     text-align: center;
+    height: 70%;
+    overflow:auto;
+    
 }
 .uid{
     color: #444;
+    margin-bottom:0.2rem;
 }
