@@ -2,16 +2,25 @@ let addbtnContainer = document.querySelector(".add-sheet-container");
 let sheetList= document.querySelector(".sheets-list");
 let firstSheet = document.querySelector(".sheet");
 let Allcells = document.querySelectorAll(".grid .col");
-// console.log(Allcells.classList);
 let addressBar = document.querySelector(".address-box");
+
 let leftBtn = document.querySelector(".left");
 let rightBtn = document.querySelector(".right");
 let centerBtn = document.querySelector(".center");
+
 let fontBtn = document.querySelector(".font-size");
+let fontOptionBtn = document.querySelector(".font-family");
+
+let boldBtn = document.querySelector(".bold");
+let italicBtn = document.querySelector(".Italic");
+let underlineBtn = document.querySelector(".underline");
 
 firstSheet.addEventListener("click", handleActiveSheet);
 
+let colorBtn = document.querySelector(".color-container #color");
+let bgColorBtn = document.querySelector(".color-container #bg-color");
 
+//Add sheet
 addbtnContainer.addEventListener("click",function(){
     let sheetsArr = document.querySelectorAll(".sheet");
     let lastSheetElem = sheetsArr[sheetsArr.length - 1];
@@ -26,6 +35,7 @@ addbtnContainer.addEventListener("click",function(){
     newSheet.addEventListener("click",handleActiveSheet);
 })
 
+//Handle formatting of sheet row
 function handleActiveSheet(e){
     let mySheet = e.currentTarget;
     let sheetsArr = document.querySelectorAll(".sheet");
@@ -37,6 +47,7 @@ function handleActiveSheet(e){
     }
 }
 
+//Event to assign value to Address bar
 for(let i=0;i<Allcells.length; i++){
     Allcells[i].addEventListener("click", function handleCell(){
         let rid=Number(Allcells[i].getAttribute("rid"));
@@ -48,6 +59,7 @@ for(let i=0;i<Allcells.length; i++){
     });
 }
 
+//Align text left
 leftBtn.addEventListener("click",function(){
     let address=addressBar.value;
     
@@ -58,6 +70,7 @@ leftBtn.addEventListener("click",function(){
     cell.style.textAlign="left";
 })
 
+//Align text right
 rightBtn.addEventListener("click", function () {
     let address = addressBar.value;
     let { rid, cid } = getRidCidfromAddress(address);
@@ -66,6 +79,7 @@ rightBtn.addEventListener("click", function () {
     cell.style.textAlign = "right";
 })
 
+//Align text center
 centerBtn.addEventListener("click", function () {
     let address = addressBar.value;
     let { rid, cid } = getRidCidfromAddress(address);
@@ -74,6 +88,7 @@ centerBtn.addEventListener("click", function () {
     cell.style.textAlign = "center";
 })
 
+//Change font size
 fontBtn.addEventListener("change", function () {
     let fontSize = fontBtn.value;
     let address = addressBar.value;
@@ -84,6 +99,7 @@ fontBtn.addEventListener("change", function () {
     cell.style.fontSize = fontSize+"px";
 })
 
+//Get coordinates of cell
 function getRidCidfromAddress(address){
     //A1
     let cellColAdr=address.charCodeAt(0);
@@ -94,4 +110,99 @@ function getRidCidfromAddress(address){
     return {rid, cid};
 }
 
+//Make text bold
+let boldIter=0;
+boldBtn.addEventListener("click", function () {
+    let address = addressBar.value;
+    let { rid, cid } = getRidCidfromAddress(address);
+    console.log(rid, cid);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    
+    if(boldIter==0){
+        cell.style.fontWeight = "bold";
+        boldIter=1;
+    }else{
+        cell.style.fontWeight = "normal";
+        boldIter=0;
+    }
+    
+})
+
+//Make text Italic
+let italicIter=0;
+italicBtn.addEventListener("click", function () {
+    let address = addressBar.value;
+    let { rid, cid } = getRidCidfromAddress(address);
+    console.log(rid, cid);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    
+    if(italicIter==0){
+        cell.style.fontStyle = "italic";
+        italicIter=1;
+    }else{
+        cell.style.fontStyle = "normal";
+        italicIter=0;
+    }
+    
+})
+
+//Make text underlined
+let underlineIter=0;
+underlineBtn.addEventListener("click", function () {
+    let address = addressBar.value;
+    let { rid, cid } = getRidCidfromAddress(address);
+    console.log(rid, cid);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    
+    if(underlineIter==0){
+        cell.style.textDecoration = "underline";
+        underlineIter=1;
+    }else{
+        cell.style.textDecoration = "none";
+        underlineIter=0;
+    }
+    
+})
+
+//Change font family
+fontOptionBtn.addEventListener("change", function () {
+    let font = fontOptionBtn.value;
+    let address = addressBar.value;
+    let { rid, cid } = getRidCidfromAddress(address);
+    console.log(rid, cid);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    console.log(font);
+    cell.style.fontFamily = font;
+})
+
+//change colour
+colorBtn.addEventListener("input", function () {
+    let colo = colorBtn.value;
+    // console.log(colo);
+    let address = addressBar.value;
+    let { rid, cid } = getRidCidfromAddress(address);
+    console.log(rid, cid);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    cell.style.color = colo;
+})
+
+//change background colour
+bgColorBtn.addEventListener("input", function () {
+    let colo = bgColorBtn.value;
+    // console.log(colo);
+    let address = addressBar.value;
+    let { rid, cid } = getRidCidfromAddress(address);
+    console.log(rid, cid);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    cell.style.backgroundColor = colo;
+})
+
+
 Allcells[0].click();
+
+
