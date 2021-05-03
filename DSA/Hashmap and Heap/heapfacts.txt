@@ -32,3 +32,12 @@ public class Main{
         }
     }
 }
+
+//////////////////////////
+To compare priority of values that contain more than one element (like a pair), we implement Comparable function and override compareTo function in interchangeable
+
+Heap order property: Parent node should have highest order element
+
+Complete binary tree: Only last level of bt is allowed to be incomplete. All other levels Should be complete.
+Children should be added from left to right.
+Scattered children in a level not allowed.
