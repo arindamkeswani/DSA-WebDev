@@ -18,6 +18,7 @@ for(String keys: hm.keySet()){ //this keyset canot be converted in to array list
 }
 
 remove and size functions are also present
+containsKey(key) //check whether key is present and return boolean value
 
 ////////////////////////////////SAMPLE CODE///////////////////////////////
 import java.util.HashMap;
@@ -45,3 +46,12 @@ public class Main{
         
     }
 }
+//////////////////
+Hash Function takes a key as input and returns the bucket index of the most probable location
+Hash Function basically cuts down the search area
+Lambda=Number of elements/number of buckets (Average number of elements per bucket)
+
+Re-hashing doubles the number of buckets to accomodate more values without increasing density of elements in a bucket(and lambda)
+Re-hashing will always keep the value of lambda <=2
+All "dynamic" data structures use this property
+
