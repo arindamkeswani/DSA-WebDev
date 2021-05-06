@@ -54,4 +54,11 @@ Lambda=Number of elements/number of buckets (Average number of elements per buck
 Re-hashing doubles the number of buckets to accomodate more values without increasing density of elements in a bucket(and lambda)
 Re-hashing will always keep the value of lambda <=2
 All "dynamic" data structures use this property
+//////////////////
+Interface: Empty structure/Contract of functions
+If class calls upon an interfacr, it has to provide the body for the Interface
+//////////////////
+downHeapify is better than upHeapify
+downHeapify does more work on less number of elements O(n logn) (down the chain)
+upHeapify does more work on more number of elements O(n) (up the chain)
 
