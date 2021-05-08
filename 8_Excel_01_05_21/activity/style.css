@@ -192,3 +192,6 @@ body{
 }
 
 
+.active-btn{
+    background-color: rgb(133, 143, 151);
+}

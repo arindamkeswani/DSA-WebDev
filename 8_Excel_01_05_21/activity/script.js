@@ -15,6 +15,8 @@ let boldBtn = document.querySelector(".bold");
 let italicBtn = document.querySelector(".Italic");
 let underlineBtn = document.querySelector(".underline");
 
+let allAlignBtns = document.querySelectorAll(".alignment-container>*");
+
 firstSheet.addEventListener("click", handleActiveSheet);
 
 let colorBtn = document.querySelector(".color-container #color");
@@ -56,9 +58,52 @@ for(let i=0;i<Allcells.length; i++){
         let colAdd = String.fromCharCode(cid+65);
         let address = colAdd + rowAdd;
         addressBar.value=address;
+        let cellObject = sheetDB[rid][cid];
+
+        // styling-> set 
+        // object styling set 
+        // UI 
+        // cell
+        // boldness
+        if (cellObject.bold == true) {
+            boldBtn.classList.add("active-btn")
+        } else {
+            boldBtn.classList.remove("active-btn");
+        }
+        // italic
+        if (cellObject.italic == true) {
+            italicBtn.classList.add("active-btn")
+        } else {
+            italicBtn.classList.remove("active-btn");
+        }
+        //underline
+        if (cellObject.underline == true) {
+            underlineBtn.classList.add("active-btn")
+        } else {
+            underlineBtn.classList.remove("active-btn");
+        }
+        // alignment
+        for (let i = 0; i < allAlignBtns.length; i++) {
+            allAlignBtns[i].classList.remove("active-btn");
+        }
+        // console.log(cellObject.halign);
+        if (cellObject.halign == "left") {
+            // left active
+            leftBtn.classList.add("active-btn")
+        } else if (cellObject.halign == "right") {
+            rightBtn.classList.add("active-btn")
+            // right active
+        } else if (cellObject.halign == "center") {
+            centerBtn.classList.add("active-btn")
+        }
+
+        //Font family
+        let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+        cell.style.fontSize = cellObject.fontSize;
     });
 }
 
+// ****************formatting*****************
 //Align text left
 leftBtn.addEventListener("click",function(){
     let address=addressBar.value;
@@ -68,6 +113,14 @@ leftBtn.addEventListener("click",function(){
     let cell = document.querySelector(`.grid .col[rid="${rid}"][cid="${cid}"]`);
     console.log(cell.innerText);
     cell.style.textAlign="left";
+    for (let i = 0; i < allAlignBtns.length; i++) {
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+
+    leftBtn.classList.add("active-btn");
+    // db update 
+    let cellObject = sheetDB[rid][cid];
+    cellObject.halign = "left";
 })
 
 //Align text right
@@ -77,6 +130,14 @@ rightBtn.addEventListener("click", function () {
     console.log(rid, cid);
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign = "right";
+
+    for (let i = 0; i < allAlignBtns.length; i++) {
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    rightBtn.classList.add("active-btn");
+    // db update 
+    let cellObject = sheetDB[rid][cid];
+    cellObject.halign = "right";
 })
 
 //Align text center
@@ -86,6 +147,14 @@ centerBtn.addEventListener("click", function () {
     console.log(rid, cid);
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign = "center";
+
+    for (let i = 0; i < allAlignBtns.length; i++) {
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    centerBtn.classList.add("active-btn");
+    let cellObject = sheetDB[rid][cid];
+    cellObject.halign = "center";
+
 })
 
 //Change font size
@@ -97,6 +166,9 @@ fontBtn.addEventListener("change", function () {
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     console.log(fontSize);
     cell.style.fontSize = fontSize+"px";
+    let cellObject = sheetDB[rid][cid];
+    cellObject.fontSize = fontSize;
+    console.log(cellObject);
 })
 
 //Get coordinates of cell
@@ -113,57 +185,112 @@ function getRidCidfromAddress(address){
 //Make text bold
 let boldIter=0;
 boldBtn.addEventListener("click", function () {
+    let isActive = boldBtn.classList.contains("active-btn");
+    console.log(isActive)
     let address = addressBar.value;
     let { rid, cid } = getRidCidfromAddress(address);
-    console.log(rid, cid);
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-    
-    
-    if(boldIter==0){
+    let cellObject = sheetDB[rid][cid];
+    if (isActive == false) {
+        // cell text bold
         cell.style.fontWeight = "bold";
-        boldIter=1;
-    }else{
+        boldBtn.classList.add("active-btn");
+        cellObject.bold = true;
+    } else {
+        // cell text normal
         cell.style.fontWeight = "normal";
-        boldIter=0;
+        boldBtn.classList.remove("active-btn");
+        cellObject.bold = false;
     }
+    // let address = addressBar.value;
+    // let { rid, cid } = getRidCidfromAddress(address);
+    // console.log(rid, cid);
+    // let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    // //can also be done with boldBtn.classlist.contains("active-btn"); //return true or false
+    // if(boldIter==0){
+    //     cell.style.fontWeight = "bold";
+    //     boldIter=1;
+    //     boldBtn.classList.add("active-btn");
+    // }else{
+    //     cell.style.fontWeight = "normal";
+    //     boldIter=0;
+    //     boldBtn.classList.remove("active-btn");
+    // }
     
 })
 
 //Make text Italic
 let italicIter=0;
 italicBtn.addEventListener("click", function () {
+    let isActive = italicBtn.classList.contains("active-btn");
     let address = addressBar.value;
     let { rid, cid } = getRidCidfromAddress(address);
-    console.log(rid, cid);
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-    
-    
-    if(italicIter==0){
+    let cellObject = sheetDB[rid][cid];
+    if (isActive == false) {
+        // cell text bold
         cell.style.fontStyle = "italic";
-        italicIter=1;
-    }else{
+        italicBtn.classList.add("active-btn");
+        cellObject.italic = true
+    } else {
+        // cell text normal
         cell.style.fontStyle = "normal";
-        italicIter=0;
+        italicBtn.classList.remove("active-btn");
+        cellObject.italic = false
     }
+    // let address = addressBar.value;
+    // let { rid, cid } = getRidCidfromAddress(address);
+    // console.log(rid, cid);
+    // let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    
+    // if(italicIter==0){
+    //     cell.style.fontStyle = "italic";
+    //     italicIter=1;
+    //     italicBtn.classList.add("active-btn");
+    // }else{
+    //     cell.style.fontStyle = "normal";
+    //     italicIter=0;
+    //     italicBtn.classList.remove("active-btn");
+    // }
     
 })
 
 //Make text underlined
 let underlineIter=0;
 underlineBtn.addEventListener("click", function () {
+    let isActive = underlineBtn.classList.contains("active-btn");
     let address = addressBar.value;
     let { rid, cid } = getRidCidfromAddress(address);
-    console.log(rid, cid);
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-    
-    
-    if(underlineIter==0){
+    let cellObject = sheetDB[rid][cid];
+    if (isActive == false) {
+        // cell text bold
         cell.style.textDecoration = "underline";
-        underlineIter=1;
-    }else{
+        underlineBtn.classList.add("active-btn");
+        cellObject.underline = true
+    } else {
+        // cell text normal
         cell.style.textDecoration = "none";
-        underlineIter=0;
+        underlineBtn.classList.remove("active-btn");
+        cellObject.underline = false
     }
+    // let address = addressBar.value;
+    // let { rid, cid } = getRidCidfromAddress(address);
+    // console.log(rid, cid);
+    // let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    
+    
+    // if(underlineIter==0){
+    //     cell.style.textDecoration = "underline";
+    //     underlineIter=1;
+    //     underlineBtn.classList.add("active-btn");
+    // }else{
+    //     cell.style.textDecoration = "none";
+    //     underlineIter=0;
+    //     underlineBtn.classList.remove("active-btn");
+    // }
     
 })
 
