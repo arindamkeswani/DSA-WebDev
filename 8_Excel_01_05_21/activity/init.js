@@ -26,22 +26,30 @@ grid.innerHTML = str;
 
 //2D Array used to store styling properties
 let worksheetDB =[]
-let sheetDB = [];
-for(let i=0;i<100;i++){
-    let row=[];
-    for(let j=0;j<26;j++){
-        let cell = {
-            bold:false, //0 or 1 for inactive or active
-            italic:false,
-            underline:false,
-            fontFamily:"Arial",
-            fontSize:10, //change HTML values
-            color:"black",
-            bgColor:"white",
-            halign:"left"
+
+function initCurrentSheetDB(){
+    let sheetDB = [];
+    for(let i=0;i<100;i++){
+        let row=[];
+        for(let j=0;j<26;j++){
+            let cell = {
+                bold:false, //0 or 1 for inactive or active
+                italic:false,
+                underline:false,
+                fontFamily:"Arial",
+                fontSize:10, //change HTML values
+                color:"#000000",
+                bgColor:"#FFFFFF",
+                halign:"left",
+                value:""
+            }
+            row.push(cell);
         }
-        row.push(cell);
+        sheetDB.push(row);
+        
     }
-    sheetDB.push(row);
     worksheetDB.push(sheetDB);
+        // console.log(workSheetDB);
 }
+
+initCurrentSheetDB();

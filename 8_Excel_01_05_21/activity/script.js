@@ -17,10 +17,12 @@ let underlineBtn = document.querySelector(".underline");
 
 let allAlignBtns = document.querySelectorAll(".alignment-container>*");
 
-firstSheet.addEventListener("click", handleActiveSheet);
-
 let colorBtn = document.querySelector(".color-container #color");
 let bgColorBtn = document.querySelector(".color-container #bg-color");
+
+let sheetDB = worksheetDB[0];
+
+firstSheet.addEventListener("click", handleActiveSheet);
 
 //Add sheet
 addbtnContainer.addEventListener("click",function(){
@@ -32,8 +34,26 @@ addbtnContainer.addEventListener("click",function(){
     newSheet.setAttribute("class","sheet");
     newSheet.setAttribute("sheetIdx",idx+1);
     newSheet.innerText = `Sheet ${idx + 1}`;
+    
+    //db
+    // active set
+    sheetsArr.forEach(function (sheet){
+        sheet.classList.remove("active-sheet");
+    })
+
     //page add
     sheetList.appendChild(newSheet);
+
+    sheetsArr = document.querySelectorAll(".sheet");
+    sheetsArr[sheetsArr.length - 1].classList.add("active-sheet");
+    //2d array
+    initCurrentSheetDB();
+    sheetDB = worksheetDB[idx];
+    //cell empty
+    //new page element value empty
+    initUI();
+    //change sheet
+
     newSheet.addEventListener("click",handleActiveSheet);
 })
 
@@ -47,6 +67,10 @@ function handleActiveSheet(e){
     if(!mySheet.classList[1]){
         mySheet.classList.add("active-sheet");
     }
+    //index
+    let sheetIdx = mySheet.getAttribute("sheetIdx");
+    sheetDB = worksheetDB[sheetIdx - 1];
+    setUI(sheetDB);
 }
 
 //Event to assign value to Address bar
@@ -64,6 +88,7 @@ for(let i=0;i<Allcells.length; i++){
         // object styling set 
         // UI 
         // cell
+
         // boldness
         if (cellObject.bold == true) {
             boldBtn.classList.add("active-btn")
@@ -97,12 +122,22 @@ for(let i=0;i<Allcells.length; i++){
             centerBtn.classList.add("active-btn")
         }
 
-        //Font family
+        //Font size
         let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-        cell.style.fontSize = cellObject.fontSize;
+        // cell.style.fontSize = cellObject.fontSize;
+        fontBtn.value = cellObject.fontSize;
+
+        //Font family
+        // cell.style.fontFamily = cellObject.fontFamily;
+        fontOptionBtn.value=cellObject.fontFamily;
+        
+        //color
+        colorBtn.value = cellObject.color;
+        bgColorBtn.value = cellObject.bgColor;
     });
 }
 
+Allcells[0].click();
 // ****************formatting*****************
 //Align text left
 leftBtn.addEventListener("click",function(){
@@ -166,21 +201,10 @@ fontBtn.addEventListener("change", function () {
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     console.log(fontSize);
     cell.style.fontSize = fontSize+"px";
+
     let cellObject = sheetDB[rid][cid];
     cellObject.fontSize = fontSize;
-    console.log(cellObject);
 })
-
-//Get coordinates of cell
-function getRidCidfromAddress(address){
-    //A1
-    let cellColAdr=address.charCodeAt(0);
-    let cellrowAdr=address.slice(1);
-    // console.log(cellColAdr);
-    let cid= cellColAdr-65;
-    let rid= Number(cellrowAdr)-1;
-    return {rid, cid};
-}
 
 //Make text bold
 let boldIter=0;
@@ -301,8 +325,12 @@ fontOptionBtn.addEventListener("change", function () {
     let { rid, cid } = getRidCidfromAddress(address);
     console.log(rid, cid);
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-    console.log(font);
+    
     cell.style.fontFamily = font;
+
+    let cellObject = sheetDB[rid][cid];
+    cellObject.fontFamily = font;
+    console.log(cellObject.fontFamily);
 })
 
 //change colour
@@ -315,6 +343,9 @@ colorBtn.addEventListener("input", function () {
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     
     cell.style.color = colo;
+
+    let cellObject = sheetDB[rid][cid];
+    cellObject.color = colo;
 })
 
 //change background colour
@@ -327,9 +358,60 @@ bgColorBtn.addEventListener("input", function () {
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     
     cell.style.backgroundColor = colo;
+    let cellObject = sheetDB[rid][cid];
+    cellObject.bgColor = colo;
 })
 
+//HELPER FUNCTIONS
 
-Allcells[0].click();
+//Get coordinates of cell
+function getRidCidfromAddress(address){
+    //A1
+    let cellColAdr=address.charCodeAt(0);
+    let cellrowAdr=address.slice(1);
+    // console.log(cellColAdr);
+    let cid= cellColAdr-65;
+    let rid= Number(cellrowAdr)-1;
+    return {rid, cid};
+}
 
+function initUI() {
+    for (let i = 0; i < Allcells.length; i++) {
+        // boldness
+        Allcells[i].style.fontWeight = "normal";
+        Allcells[i].style.fontStyle = "normal";
+        Allcells[i].style.textDecoration = "none";
+        Allcells[i].style.fontFamily = "Arial";
+        Allcells[i].style.fontSize = "10px";
+        Allcells[i].style.textAlign = "left";
+        Allcells[i].innerText = "";
+    }
+}
 
+for (let i = 0; i < Allcells.length; i++) {
+    Allcells[i].addEventListener("blur", function handleCell() {
+        let address = addressBar.value;
+        let { rid, cid } = getRidCidfromAddress(address);
+        let cellObject = sheetDB[rid][cid];
+        let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+        cellObject.value = cell.innerText;
+    });
+}
+
+function setUI(sheetDB) {
+    for (let i = 0; i < sheetDB.length; i++) {
+        for (let j = 0; j < sheetDB[i].length; j++) {
+            let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
+            let { bold, italic, underline, fontFamily, fontSize, color, bgColor, halign, value } = sheetDB[i][j];
+            cell.style.fontWeight = bold == true ? "bold" : "normal";
+            cell.style.fontStyle = italic == true ? "italic" : "normal";
+            cell.style.textDecoration = underline == true ? "underline" : "none";
+            cell.style.fontFamily = fontFamily;
+            cell.style.fontSize = fontSize;
+            cell.style.color = color;
+            cell.style.backgroundColor = bgColor;
+            cell.style.textAlign = halign;
+            cell.innerText = value;
+        }
+    }
+}
