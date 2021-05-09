@@ -96,7 +96,7 @@ public class Main {
       int lht=isBalanced(node.left);
       int rht=isBalanced(node.right);
       
-      int bf=Math.abs(lht-rht);
+      int bf=Math.abs(lht-rht); //balance factor
       
       if(bf>1){
           flag=false;
