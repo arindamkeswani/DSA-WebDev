@@ -41,7 +41,9 @@ function initCurrentSheetDB(){
                 color:"#000000",
                 bgColor:"#FFFFFF",
                 halign:"left",
-                value:""
+                value:"",
+                children : [],
+                formula:""
             }
             row.push(cell);
         }
