@@ -94,7 +94,7 @@ public class Main {
         Pair top = st.peek();
         
         
-        if(top.state==1){
+        if(top.state==1){ //Adding prefix nodes
             pre+=top.node.data+" ";
             // top.state++;
         
@@ -104,7 +104,7 @@ public class Main {
                 st.push(new Pair(top.node.left,1));
                 top.state++;
             }
-        }else if(top.state==2){
+        }else if(top.state==2){ //Adding infix nodes
             in+=top.node.data+" ";
             
             if(top.node.right==null){
@@ -113,7 +113,7 @@ public class Main {
                 st.push(new Pair(top.node.right,1));
                 top.state++;
             }
-        }else if(top.state==3){
+        }else if(top.state==3){ //Adding postfix nodes
             post+=top.node.data+" ";
             st.pop();
         }
