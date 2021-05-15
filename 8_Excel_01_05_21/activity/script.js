@@ -20,6 +20,9 @@ let allAlignBtns = document.querySelectorAll(".alignment-container>*");
 let colorBtn = document.querySelector(".color-container #color");
 let bgColorBtn = document.querySelector(".color-container #bg-color");
 
+let gridContainer = document.querySelector(".grid_container");
+let topLeftBlock = document.querySelector(".top-left-block");
+
 let sheetDB = worksheetDB[0];
 
 let formulaBar = document.querySelector(".formula-box");
@@ -139,7 +142,32 @@ for(let i=0;i<Allcells.length; i++){
     });
 }
 
+
+for(let i=0;i<Allcells.length; i++){
+    Allcells[i].addEventListener("keydown", function (e) {
+        let obj = Allcells[i].getBoundingClientRect();
+        let height = obj.height;
+        let address = addressBar.value;
+        let { rid, cid } = getRidCidfromAddress(address);
+        let leftCol = document.querySelectorAll(".left-col .left-col-box")[rid];
+        leftCol.style.height = height + "px";
+    });
+}
+
+gridContainer.addEventListener("scroll", function () {
+    // console.log(e);
+    let top = gridContainer.scrollTop;
+    let left = gridContainer.scrollLeft;
+    // console.log(left);
+    topLeftBlock.style.top = top + "px";
+    topRow.style.top = top + "px";
+    leftCol.style.left = left + "px";
+    topLeftBlock.style.left = left + "px";
+})
+
 Allcells[0].click();
+
+
 // ****************formatting*****************
 //Align text left
 leftBtn.addEventListener("click",function(){
