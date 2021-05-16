@@ -1,0 +1,32 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0px;
+}
+
+.video-container{
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+}
+
+.video{
+    height: 100%;
+    width:100%;
+}
+
+.record-btn{
+    position:fixed;
+    height:5rem;
+    width:5rem;
+    top:1 rem;
+    z-index: 2;
+    size: 1.5rem;
+    color: black;
+    right: 5vh;
+    top:34vh;
+    border-radius: 50%;
+    border-color: red;
+}
