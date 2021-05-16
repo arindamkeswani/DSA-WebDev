@@ -97,12 +97,13 @@ body{
     height:50px;    
     background-color: lightgrey;
     display:flex;
-    /* overflow: hidden; */
+    overflow: auto;
+    
 }
 
 .add-sheet-container{
     height: 100%;
-    min-width: 30px;
+    min-width: 60px;
     width: 50px;
     border: 1px solid gray;
     display: flex;
@@ -125,20 +126,28 @@ body{
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .sheets-list {
-    -ms-overflow-style: none;  /* IE and Edge */
-     scrollbar-width: none;  /*Firefox*/
-     overflow-y: hidden; 
+    /* -ms-overflow-style: none;  IE and Edge */
+       /*Firefox*/
+     /* overflow-y: hidden;  */
+     overflow: auto;
+     display: flex;
+     height: 100%;
+     padding: 0px;
  } 
-
+.sheets-list::-webkit-scrollbar{
+    display:none;
+    color: rgb(130, 131, 130);
+}
 .sheet{
-    min-width: 80px;
+    min-width: 90px;
     /* max-width: 80px; */
-    width: 100px;
+    /* width: 100px; */
     height: 100%;
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgb(174, 178, 182);
+    margin-left:2px;
     /* display: inline-block */
     
 }
