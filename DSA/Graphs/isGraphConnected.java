@@ -1,5 +1,6 @@
 // 1. You are given a graph.
-// 2. You are required to find and print all connected components of the graph.
+// 2. You are required to find and print if the graph is connected (there is a path from 
+//      every vertex to every other).
 
 import java.io.*;
 import java.util.*;
@@ -36,11 +37,15 @@ public class Main {
          graph[v2].add(new Edge(v2, v1, wt));
       }
 
-      ArrayList<ArrayList<Integer>> comps = gcc(graph);
-      
       // write your code here
-
-      System.out.println(comps);
+      ArrayList<ArrayList<Integer>> res =gcc(graph); //get total number of components in the graph, if there is only one (Connected), then true, otherwise false
+    //   System.out.println(res.size());
+      if(res.size() == 1){
+          System.out.println(true);
+      }
+      else{
+          System.out.println(false);
+      }
    }
    
    public static ArrayList<ArrayList<Integer>> gcc(ArrayList<Edge> graph[]){
@@ -68,4 +73,5 @@ public class Main {
            }
        }
    }
+
 }

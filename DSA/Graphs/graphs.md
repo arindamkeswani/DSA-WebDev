@@ -23,6 +23,13 @@ ArrayList has default values as null, so initialize an arraylist inside every in
 __________
 Output will give an error in printing, so override the toString() function to format it
 _______________
+If you can reach a dest from a src via multiple paths, a cycle exists
+_______________
+For Bipartite graph, a vertex's (in one group) neighbours,  should not be in same group
+Acyclic graphs are always bipartite
+Cyclic graphs: Odd-Not Bipartite
+             : Even-bipartite
+_______________
 import java.util.*;
 public class Intro{
     public static class Edge{
