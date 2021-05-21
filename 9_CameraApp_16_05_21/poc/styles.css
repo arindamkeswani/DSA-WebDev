@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+}
+
+.color{
+    height: 70%;
+    width: 25%;
+}
+
+.parent{
+    border: 3px solid;
+    height: 5rem;
+    width: 60vw;
+    margin:0px;
+    display: flex;
+    justify-content:space-evenly;
+    align-items:center ;
+}
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: lightgreen;
+}
+
+.blue{
+    background-color: blue;
+}

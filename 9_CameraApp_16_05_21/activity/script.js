@@ -2,17 +2,19 @@
 // console.log(allConstraints);
 
 let videoRecorder = document.querySelector("#record-video");
+let capturebtn = document.querySelector("#capture");
 
 let videoElem = document.querySelector("video");
 // let audioElem = document.querySelector("audio");
 
 let constraints = {
     video:true,
-    audio:true
+    audio:true,
 }
 
 let mediaRecorder;
 let buffer=[];
+let recordState = false;
 
 navigator.mediaDevices.getUserMedia(constraints)
 .then(function(mediaStream){
@@ -47,7 +49,7 @@ navigator.mediaDevices.getUserMedia(constraints)
 
 
 // let videoRecorder = document.querySelector("#record-video");
-let recordState = false;
+
 
 videoRecorder.addEventListener("click",function(){
     if(!mediaRecorder){
@@ -63,4 +65,24 @@ videoRecorder.addEventListener("click",function(){
         videoRecorder.innerHTML = "Record";
         recordState=false;
     }
+})
+
+capturebtn.addEventListener("click", function () {
+    // create a canvas element
+    // equal to your video frame
+    let canvas = document.createElement("canvas");
+    canvas.width = videoElem.videoWidth;
+    canvas.height = videoElem.videoHeight;
+    let tool = canvas.getContext("2d");
+    // draw a frame on that canvas
+    tool.drawImage(videoElem, 0, 0);
+    // toDataUrl 
+    let link = canvas.toDataURL();
+    // download 
+    let anchor = document.createElement("a");
+    anchor.href = link;
+    anchor.download = "file.png";
+    anchor.click();
+    anchor.remove();
+    canvas.remove();
 })
