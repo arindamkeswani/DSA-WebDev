@@ -17,20 +17,144 @@ body{
     width:100%;
 }
 
-.record-btn, .capture-btn{
+
+.btn-parent{
+    
+    height:7rem;
+    width:7rem;
+    border:0.5rem solid white;
     position:fixed;
-    height:5rem;
-    width:5rem;
-    top:1 rem;
     z-index: 2;
     size: 1.5rem;
     color: black;
     right: 5vh;
     top:34vh;
     border-radius: 50%;
-    border-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 6;
 }
 
+.record-btn, .capture-btn{
+    
+    height:4.5rem;
+    width:4.5rem;
+    top:1 rem;
+    border-radius: 50%;
+    border: none;
+    outline:none;
+
+    
+}
+
+.record-btn{
+    background-color: red;
+}
+
+.capture-container{
+    top:55vh;
+    z-index: 6;
+}
 .capture-btn{
     top:55vh;
+}
+
+/* animations */
+.record-animation{
+    animation: scaleUp 1s ease-in infinite;
+}
+
+.capture-animation{
+    animation: scaleUp 1s ease-in infinite;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(1);   
+    }
+    25%{
+        transform: scale(1.125);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    25%{
+        transform: scale(1.125);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* filters */
+.filter-container{
+    position:fixed;
+    height:50vh;
+    width:4rem;
+    top:10vh;
+    left:5vw;
+    z-index: 5;
+}
+.filter{
+    background-image: url("https://picsum.photos/id/237/200/300"); 
+    height:20%;
+    background-blend-mode: color-burn;
+}
+
+.timing{
+    color:white;
+    position:fixed;
+    bottom:15vh;
+    left:3vw;
+    font-size: 2rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    display: none;
+    z-index: 5;
+}
+
+.timing-active{
+    display: block;
+}
+
+.zoom{
+    
+    height:4rem;
+    width:3rem;
+    right:4.5vw;
+    background-color: #444;
+    position:fixed;
+
+    top:20vh;
+    z-index:5;
+    
+    /* display:flex; */
+}
+
+.icon-container{
+    height: 50%;
+    color:white;
+    border-bottom: 2px solid black;
+    text-align:center;
+    /* padding:1rem; */
+    
+}
+
+.icon{
+    font-size:180%;
+}
+/* filter-ui */
+.ui-filter{
+    height:100vh;
+    width:100vw;
+    /* background-color: rgba(); */
+    position:fixed;
+    z-index:4;
+    display:none;
+    opacity:1;
+}
+
+.ui-filter-active{
+    display:block;
 }
