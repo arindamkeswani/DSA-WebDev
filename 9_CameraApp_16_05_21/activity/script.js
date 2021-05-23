@@ -10,6 +10,10 @@ let timingElem = document.querySelector(".timing");
 let allFilters = document.querySelectorAll(".filter");
 let uiFilter = document.querySelector(".ui-filter");
 let filterColor = "";
+let zoomInElem = document.querySelector("#plus-container");
+let zoomOutElem = document.querySelector("#minus-container");
+let videoContainer=document.querySelector(".video-container");
+let level = 1; //degree of zoom
 
 let constraints = {
     video:true,
@@ -36,12 +40,14 @@ navigator.mediaDevices.getUserMedia(constraints)
     mediaRecorder.addEventListener("stop", function(e){
         let blob = new Blob(buffer, {type:"video/mp4"});
         const url = window.URL.createObjectURL(blob);
+        addMediaToDB(url, "video");
+        
         //download btn
-        let a = document.createElement("a");
-        //download
-        a.download = "file.mp4";
-        a.href = url;
-        a.click();
+        // let a = document.createElement("a");
+        // //download
+        // a.download = "file.mp4";
+        // a.href = url;
+        // a.click();
         buffer=[]
     })
 })
@@ -54,7 +60,7 @@ navigator.mediaDevices.getUserMedia(constraints)
 
 // let videoRecorder = document.querySelector("#record-video");
 
-
+//recording functionality
 videoRecorder.addEventListener("click",function(){
     if(!mediaRecorder){
         alert("Please allow permissions for camera and microphone.");
@@ -103,20 +109,31 @@ capturebtn.addEventListener("click", function () {
     let canvas = document.createElement("canvas");
     canvas.width = videoElem.videoWidth;
     canvas.height = videoElem.videoHeight;
+
     let tool = canvas.getContext("2d");
+
+    tool.scale(level, level); //zoom before drawing image
+    let x = (canvas.width/ level-canvas.width)/2
+    let y = (canvas.height/ level-canvas.height)/2
     // draw a frame on that canvas
-    tool.drawImage(videoElem, 0, 0);
-    tool.fillStyle=filterColor;
-    tool.fillRect(0,0,canvas.width,canvas.height);
+    tool.drawImage(videoElem, x, y);
+    
+    //translucent
+    if(filterColor){
+        tool.fillStyle=filterColor;
+        tool.fillRect(0,0,canvas.width,canvas.height);
+    }
+    
     // toDataUrl 
     let link = canvas.toDataURL();
+    addMediaToDB(link, "img");
     // download 
-    let anchor = document.createElement("a");
-    anchor.href = link;
-    anchor.download = "file.png";
-    anchor.click();
-    anchor.remove();
-    canvas.remove();
+    // let anchor = document.createElement("a");
+    // anchor.href = link;
+    // anchor.download = "file.png";
+    // anchor.click();
+    // anchor.remove();
+    // canvas.remove();
 
     setTimeout(function(){
         capturebtn.classList.remove("capture-animation");
@@ -141,3 +158,23 @@ for(let i=0;i<allFilters.length;i++){
         }
     })
 }
+
+//zoom in/out
+
+
+
+zoomInElem.addEventListener("click", function(){
+    
+    if(level<3){
+        level+=0.2;
+        videoElem.style.transform= `scale(${level})`;
+    }
+})
+
+zoomOutElem.addEventListener("click", function(){
+    
+    if(level>1){
+        level-=0.2;
+        videoElem.style.transform= `scale(${level})`;
+    }
+})

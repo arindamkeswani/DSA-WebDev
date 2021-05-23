@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="txnDB">
+    <input type="number" id="version">
+    <button id = "createDB">Create</button>
+    <button id = "addNote">Add note</button>
+    <button id="view">View</button>
+    
+    <script>
+        let db;
+        let count=1;
+        let createBtn=document.querySelector("#createDB");
+        let addBtn=document.querySelector("#addNote");
+        let viewBtn=document.querySelector("#view");
+
+        createBtn.addEventListener("click", function(){
+            let dbn = document.querySelector("#txnDB").value;
+            let v= document.querySelector("#version").value;
+            let request = window.indexedDB.open(dbn,v);
+            request.addEventListener("success",function(e){
+                db=e.target.result;
+                console.log("success");
+            })
+            request.addEventListener("error",function(e){
+                console.log(e);
+                console.log("Error");
+            })
+            request.addEventListener("upgradeneeded",function(e){
+                //create table for database array
+                //first time->
+                db=e.target.result;
+                console.log("upgrade needed");
+                if(db){
+                    db.createObjectStore("notes",{keyPath: "nId"});
+                }
+            })
+        })
+
+        addBtn.addEventListener("click", function(){
+            if(db){
+                let note = {
+                    nId:count++,
+                    txt:"I am a note"+count
+                }
+
+                let tx = db.transaction("notes", "readwrite")
+                //store get
+                let notesStore = tx.objectStore("notes");
+                notesStore.add(note);
+            }
+        })
+
+        viewBtn.addEventListener("click", function(){
+            if(db){
+                let tx = db.transaction("notes", "readonly");
+                let notesStore = tx.objectStore("notes");
+                //async
+                let pendingAns = notesStore.openCursor();
+                pendingAns.addEventListener("success", function(e){
+                    let cursor = pendingAns.result;
+                    if(cursor){
+                        console.log(cursor.value);
+                        cursor.continue();
+                    }
+                })
+            }else{
+                alert("DB is still loading")
+            }
+        })
+    </script>
+
+</body>
+</html>
