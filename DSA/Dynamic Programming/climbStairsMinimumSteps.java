@@ -25,8 +25,13 @@ public class Main {
         for(int i=0;i<n;i++){
             a[i] = x.nextInt();
         }
-        
-        System.out.println(climbMinCost(n, a));
+        long steps = climbMinCost(n, a);
+        if(steps==Integer.MAX_VALUE){
+            System.out.println("null");
+        }
+        else{
+            System.out.println(steps);
+        }
     }
     
     public static long climbMinCost(int n, int a[]){
@@ -49,7 +54,7 @@ public class Main {
                         }
                         
                     }
-                    dp[i] = temp + 1; //this can cause INteger.MAX_VALUE numbers to turn negative, that is why long is used
+                    dp[i] = temp + 1;
                     
                     //  for(int k=0;k<n+1;k++){
                     //     System.out.print(dp[k]+" ");
