@@ -12,3 +12,11 @@ Video recording
 Navigator-Browser representative
 Window-Represents a (current )tab/page (Resize events are done here)
 Document- Represents the HTML,CSS
+
+Index DB
+let req = indexedDB.open(name,version)
+onupgradeneeded, onsuccess,onerror (3 mainly used methods)
+
+if(current version (X) > version of DB in browser (Y)), upgradeneeded->success
+if X < Y -> error
+if x=y , successs, can be used for reading
