@@ -52,7 +52,7 @@ public class Main {
     for(int i = 0 ; i < arr.length ; i++){
         arr[i] = ans[i];
     }
-    
+    ///////////////////////////////////////////////
     // int freq[] = new int[range];
     // for(String vl : arr){
     //     int val=Integer.parseInt(vl,10);
@@ -69,7 +69,7 @@ public class Main {
     //     int val = Integer.parseInt(vl,10);
     //     int pos = (val/div)%mod;
     //     int place = freq[pos];
-    //     res[place-1] = String.valueOf(val);
+    //     res[place-1] = vl;
     //     freq[pos]--;
     // }
     
