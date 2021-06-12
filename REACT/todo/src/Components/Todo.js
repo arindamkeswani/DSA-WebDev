@@ -8,18 +8,14 @@ export default class Todo extends Component {
             currTask:''
         }
     }
-    handleChange=(e)=>{
-        let val = e.target.value;
-        // console.log(val);
-        this.setState({currTask:val})
-    }
-    onSubmit=()=>{
+    
+    onSubmit=(task)=>{
         // this.state.push({id:this.state.tasks.length + 1, txt: this.tasks.currTask});
         // currTask='';
-        let nta = [...this.state.tasks,{id:this.state.tasks.length+1, txt: this.state.currTask}]
+        let nta = [...this.state.tasks,{id:this.state.tasks.length+1, txt: task}];
         this.setState({
             tasks:nta,
-            currTask:''
+            // currTask:''
         })
     }
 
@@ -32,10 +28,10 @@ export default class Todo extends Component {
         })
     }
     render() {
-        
+        console.log('Todo render');
         return (
             <>
-                <InputComponent value={this.state.currTask} onChange={this.handleChange} onSubmit={this.onSubmit}></InputComponent>
+                <InputComponent onSubmit={this.onSubmit}></InputComponent>
                 <TaskList tasks={this.state.tasks} onDelete={this.onDelete}></TaskList>
             </>
         )
@@ -46,13 +42,28 @@ class InputComponent extends Component
 {
     constructor(props){
         super(props);
+        this.state={
+            currTask:''
+        }
+    }
+    handleChange=(e)=>{
+        let val = e.target.value;
+        // console.log(val);
+        this.setState({currTask:val})
     }
     render(){
         // console.log(props);
+        console.log("Input render");
+
         return(
             <div className='input-container'>
-                    <input onChange={this.props.onChange} value={this.props.value} type='text'></input>
-                    <button onClick={this.props.onSubmit}>Add</button>
+                    <input onChange={this.handleChange} value={this.state.currTask} type='text'></input>
+                    <button onClick={()=>{
+                        this.props.onSubmit(this.state.currTask)
+                        this.setState({currTask:''})
+                    }
+                }        
+                >Add</button>
             </div>
         )
     }
@@ -66,6 +77,7 @@ class TaskList extends Component
     }
     render(){
         // console.log(this.props);
+        console.log('TaskList render');
         return(
             <div className="class-list">
                     <ul>{
