@@ -21,8 +21,6 @@
             super();
             this.state = {
                 count:0,
-                count2:0,
-                count3:0
             }
         }
 
@@ -45,7 +43,18 @@
             )
         }
     }
-    ReactDOM.render(<Counter/>, document.getElementById('root'));
+
+    function Counters(){
+        return (
+            <React.Fragment>
+                <Counter/>
+                <Counter/>
+                <Counter/>
+                <Counter/>
+            </React.Fragment>
+        )
+    }
+    ReactDOM.render(<Counters/>, document.getElementById('root'));
     </script>
 </body>
 </html>

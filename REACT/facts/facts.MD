@@ -31,5 +31,24 @@ Test:
     - Component name has to be a capital letter
 - JSX - Mixture of HTML and JS for syntax simplicity for developers. `Babel` (is a JSX compiler that converts it to JS, which is understood by Browser)
 - Return statement is compulsory (Only JSX allowed) 
+- State is an object used to store component details
+- `setState` is used becuase simply updating state value is not reflected on UI. This function re-renders the component.
 ----
+`12/06/21`
+
+`npx create-react-app todo`
+To create a react app
+
+`cd todo`
+Go to the project folder in command line
+
+`npm start`
+To start React app after the installation is complete
+
+- There can be only one default export in  a .js file
+- Remove strict mode frmo public/src/index.js
+- Root is in index.html file
+- Empty the div inside App function
+- Arrays/object should not be directly mutated. Use spread operator `...` instead
+- If the parent gets re=rendered, the child gets re-rendered
 
