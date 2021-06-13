@@ -51,4 +51,13 @@ To start React app after the installation is complete
 - Empty the div inside App function
 - Arrays/object should not be directly mutated. Use spread operator `...` instead
 - If the parent gets re=rendered, the child gets re-rendered
+----
+`13/06/21`
+
+- We only keep those attributes in state that reflect changed on UI
+- HW: 
+    1. Pagination (make formula and use slice. Use no of pages, page limit, number of pages for the formula). Bootstap pagination can be used in layouts
+    2. Sort acc to stock or rate (Use object sorting and compareTo)
+    3. Display genre-wise
+
 
