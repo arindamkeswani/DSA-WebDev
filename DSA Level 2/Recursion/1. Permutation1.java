@@ -19,7 +19,9 @@ public class Main {
   public static void permutations(int[] boxes, int ci, int ti){
     // write your code here
     //Perspective=Permutation-1 : Object chooses which box it wants to go into. Then next object chooses from remaining places, and so on
-//in case of identical items, permutation can be considered as combination
+    // (Another perspective is Box chooses, where either an object will not come in a box or if it does, which object will come)
+    //in case of identical items, permutation can be considered as combination
+    //
     if(ci>ti){ //if all items are evaluated, print permutation(ci=curent item, ti=total item, boxes=box array)
     for(int vl:boxes){
         System.out.print(vl);
