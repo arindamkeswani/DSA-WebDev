@@ -6,11 +6,12 @@ export default class Movies extends Component {
         super(props);
         this.state = {
             movies: getMovies(),
-            currSearchText:''
-
+            currSearchText:'',
+            // movies_temp:getMovies()
         }
     }
     onDelete=(id)=>{
+        console.log("");
         let filterArr = this.state.movies.filter(movieObj=>{
             return movieObj._id!=id
         })
@@ -48,6 +49,49 @@ export default class Movies extends Component {
 
 
     }
+
+    onStockSort=(e)=>{
+        let className = e.target.className;
+        console.log("Clicked Stock");
+        if (className == 'fa fa-sort-asc') {
+            let sortedArr= this.state.movies.sort(function(a,b){
+                return a.numberInStock - b.numberInStock;
+            })
+            this.setState({
+                movies:sortedArr
+            })
+        }else if(className== 'fa fa-sort-desc') {
+            let sortedArr= this.state.movies.sort(function(a,b){
+                return b.numberInStock - a.numberInStock;
+            })
+            this.setState({
+                movies:sortedArr
+            })
+        }
+        
+    }
+
+    onRateSort=(e)=>{
+        let className = e.target.className;
+        console.log("Clicked Rate");
+        if (className == 'fa fa-sort-asc') {
+            let sortedArr= this.state.movies.sort(function(a,b){
+                return a.dailyRentalRate - b.dailyRentalRate;
+            })
+            this.setState({
+                movies:sortedArr
+            })
+        }else if(className== 'fa fa-sort-desc') {
+            let sortedArr= this.state.movies.sort(function(a,b){
+                return b.dailyRentalRate - a.dailyRentalRate;
+            })
+            this.setState({
+                movies:sortedArr
+            })
+        }
+        
+    }
+
     render() {
         let {movies,currSearchText}=this.state;
         let filterMovies =[];
@@ -79,13 +123,13 @@ export default class Movies extends Component {
                                     <th scope="col">Genre</th>
                                     <th scope="col">
                                         Stock
-                                        <i className="fa fa-sort-asc" aria-hidden="true"></i>
-                                        <i className="fa fa-sort-desc" aria-hidden="true"></i>
+                                        <i className="fa fa-sort-asc" aria-hidden="true" onClick={this.onStockSort}></i>
+                                        <i className="fa fa-sort-desc" aria-hidden="true" onClick={this.onStockSort}></i>
                                     </th>
                                     <th scope="col">
                                         Rate
-                                        <i className="fa fa-sort-asc" aria-hidden="true"></i>
-                                        <i className="fa fa-sort-desc" aria-hidden="true"></i>
+                                        <i className="fa fa-sort-asc" aria-hidden="true" onClick={this.onRateSort}></i>
+                                        <i className="fa fa-sort-desc" aria-hidden="true" onClick={this.onRateSort}></i>
                                     </th>
                                     <th></th>
                                 </tr>
