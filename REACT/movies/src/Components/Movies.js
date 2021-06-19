@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component} from 'react'
 import { getMovies } from './MovieService';
 
+// import axios from 'axios';
 export default class Movies extends Component {
     constructor(props) {
         super(props);
         this.state = {
             movies: getMovies(),
             currSearchText:'',
-            // movies_temp:getMovies()
+            currPage: 1,
+            limit: 4
         }
     }
     onDelete=(id)=>{
@@ -91,9 +93,16 @@ export default class Movies extends Component {
         }
         
     }
+    handlePageChange=(pageNumber)=>{
+        this.setState({currPage:pageNumber});
+    }
+    handleLimit = (e) => {
+        let num = Number(e.target.value)
+        this.setState({ limit: num })
+    }
 
     render() {
-        let {movies,currSearchText}=this.state;
+        let {movies,currSearchText, limit, currPage}=this.state;
         let filterMovies =[];
         if(currSearchText!='')
         {
@@ -107,6 +116,16 @@ export default class Movies extends Component {
         {
             filterMovies=movies;
         }
+
+        let numberOfPages= Math.ceil(filterMovies.length/limit);
+        let pageNumberArr=[];
+        for(let i=0;i<numberOfPages;i++){
+            pageNumberArr.push(i+1);
+        }
+        let si = (currPage - 1) * limit; //movies till prev page
+        let ei = si + limit; //total movies, including movie numbers on current page
+        filterMovies = filterMovies.slice(si, ei); // movie numbers on current page
+
         return (
             <div className='container'>
                 <div className='row'>
@@ -148,6 +167,24 @@ export default class Movies extends Component {
                                 }
                             </tbody>
                         </table>
+
+                        <nav aria-label="...">
+                            <ul className="pagination">
+                            {
+                                    pageNumberArr.map(pageNumber=>{
+                                        let classStyleName = pageNumber==currPage? 'page-item active' : 'page-item'
+                                        // the above let variable is used to define the class too be put on the li element.
+                                        //  As this decides the blue backgroound.
+                                        return(
+                                            <li onClick={()=>this.handlePageChange(pageNumber)} className={classStyleName} key={pageNumber} >
+                                                <span className="page-link">{pageNumber}</span>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
