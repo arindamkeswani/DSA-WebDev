@@ -24,8 +24,8 @@ public class Main {
   }
 
     public static void comb(String ustr, HashMap<Character, Integer> fmap, int idx, String asf, int k){
-       //Either char will be selected in ans or it will not. If it gets selected, based on freq, take all         possible comb such as "aaa", "aa", "a", or if "a" is not selected at all
-       
+       //Either char will be selected in ans or it will not. If it gets selected, based on freq, take all possible comb such as "aaa", "aa", "a", or if "a" is not selected at all
+       //Each level represents a character
        if(asf.length()>k){ //invalid length
            return;
        }
