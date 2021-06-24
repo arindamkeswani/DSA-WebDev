@@ -27,7 +27,7 @@ public class Main {
         
         //find a point in the array before which we need to complete one transaction and get max profit till then, and same for after that point
         
-        int mpist = 0; //max profit if sold today
+        int mpist = 0; //max profit if sold today (for left half)
         int leastsf =a[0]; //least so far, to  determine buying point
         int mpsut[] = new int[n] ; //maximum profit sold upto today
         for(int i=1;i<n;i++){

@@ -17,7 +17,7 @@ public class Main {
         Scanner x= new Scanner(System.in);
         String s= x.nextLine();
         
-        //make (n+1)x3. Rows represent each character is strong (starting woth blank string)
+        //make (n+1)x3. Rows represent each character is strong (starting with blank string)
         //columns represent, a+, a+b+, a+b+c+ resepectively
         //On encountering a, we use (a+)= 2(a+ (old sequences)) + 1
         //On encountering b, we use (a+b+)= 2(a+b+ (old sequences)) + (a+(current no. of sequences))

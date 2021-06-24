@@ -20,11 +20,11 @@ public static void main(String[] args) throws Exception {
     
     long dp[][] = new long[2][n+1];
     
-    long countEnd0=1;
-    long countEnd1=1;
+    long countEnd0=1; //represents "Ends with building"
+    long countEnd1=1; //represents "Ends with space"
     for(int len=2;len<=n;len++){
-        long t0 = countEnd1;
-        long t1 = countEnd1 + countEnd0;
+        long t0 = countEnd1; //if building gets selected then it can be done in same way as prev space ways
+        long t1 = countEnd1 + countEnd0; //if space gets selected, it can be done in (no of prev space ways+ number of prev building ways) as there is no limitation of not having conseq spaces
         
         countEnd0=t0;
         countEnd1=t1;
