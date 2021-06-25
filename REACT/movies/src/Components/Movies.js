@@ -1,16 +1,26 @@
 import React, { Component} from 'react'
 import { getMovies } from './MovieService';
-
+import axios from 'axios';
 // import axios from 'axios';
 export default class Movies extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            movies: getMovies(),
+            // movies: getMovies(),
+            movies:[],
             currSearchText:'',
             currPage: 1,
             limit: 4
         }
+    }
+
+    async componentDidMount(){
+        let res = await axios.get('https://backend-react-movie.herokuapp.com/movies');
+        console.log(res.data.movies);
+        this.setState({
+            movies:res.data.movies
+        })
+
     }
     onDelete=(id)=>{
         console.log("");
@@ -103,10 +113,11 @@ export default class Movies extends Component {
 
     render() {
         let {movies,currSearchText, limit, currPage}=this.state;
-        let filterMovies =[];
+        // let filterMovies =[];
+        let filteredArr = [];
         if(currSearchText!='')
         {
-            filterMovies = movies.filter(movieObj=>{
+            filteredArr = movies.filter(movieObj=>{
                     let title = movieObj.title.trim().toLowerCase();
                     
                     return title.includes(currSearchText.toLowerCase());
@@ -114,17 +125,17 @@ export default class Movies extends Component {
         }
         else
         {
-            filterMovies=movies;
+            filteredArr=movies;
         }
 
-        let numberOfPages= Math.ceil(filterMovies.length/limit);
+        let numberOfPages= Math.ceil(filteredArr.length/limit);
         let pageNumberArr=[];
         for(let i=0;i<numberOfPages;i++){
             pageNumberArr.push(i+1);
         }
         let si = (currPage - 1) * limit; //movies till prev page
         let ei = si + limit; //total movies, including movie numbers on current page
-        filterMovies = filterMovies.slice(si, ei); // movie numbers on current page
+        filteredArr = filteredArr.slice(si, ei); // movie numbers on current page
 
         return (
             <div className='container'>
@@ -155,7 +166,7 @@ export default class Movies extends Component {
                             </thead>
                             <tbody>
                                 {
-                                    filterMovies.map(movieObj => (
+                                    filteredArr.map(movieObj => (
                                         <tr scope='row' key={movieObj._id}>
                                             <td>{movieObj.title}</td>
                                             <td>{movieObj.genre.name}</td>
@@ -171,7 +182,7 @@ export default class Movies extends Component {
                         <nav aria-label="...">
                             <ul className="pagination">
                             {
-                                    pageNumberArr.map(pageNumber=>{
+                                    pageNumberArr.map((pageNumber)=>{
                                         let classStyleName = pageNumber==currPage? 'page-item active' : 'page-item'
                                         // the above let variable is used to define the class too be put on the li element.
                                         //  As this decides the blue backgroound.

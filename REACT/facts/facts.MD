@@ -60,4 +60,20 @@ To start React app after the installation is complete
     2. Sort acc to stock or rate (Use object sorting and compareTo)
     3. Display genre-wise
 
+----
+`25/06/21`
+
+- Component Lifecycle Methods
+- 3 phases:
+    1. Mounting (When element loads on screen)
+        1. Constuctor
+        2. Render
+        3. ComponentDidMount
+    2. Update (State change) [Cyclic, till unmounting happens]
+        1. render
+        2. ComponentDidUpdate
+    3. Un-mounting (When element is removed from screen)
+        1. ComponentWillUnmount
+- Side Effects: Making calls to databases, network requests, etc. This can cause page freeze if called in constructor.
+So we do this asyncronously in ComponentDidMount instead of constructor so that UI can load while we are still retrieving data
 
