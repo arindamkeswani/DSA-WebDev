@@ -77,3 +77,16 @@ To start React app after the installation is complete
 - Side Effects: Making calls to databases, network requests, etc. This can cause page freeze if called in constructor.
 So we do this asyncronously in ComponentDidMount instead of constructor so that UI can load while we are still retrieving data
 
+----
+`26/6/21`
+- Routing: npm i react-router-dom
+- Multiple components can be rendered if overlapping path is found, we use switch to solve this
+- Router compares all paths. Switch renders the first match found.
+- Solution: in switch, most common path should be shifted at the bottom
+
+- Hooks: functions that let you "hook into" React State & lifecycle methods from functional components. They dont work in class components.
+    -> State, lifecycles
+    Pros of using hooks: 
+        1. Escape from boilerplate code of class components
+        2. No more worry about handling .this
+        3. Separation of logic

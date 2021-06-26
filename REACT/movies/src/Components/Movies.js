@@ -10,15 +10,19 @@ export default class Movies extends Component {
             movies:[],
             currSearchText:'',
             currPage: 1,
-            limit: 4
+            limit: 4,
+            genres:[{_id:"abcd", name:"All Genres"} ],
+            cGenre:"All Genres"
         }
     }
 
     async componentDidMount(){
         let res = await axios.get('https://backend-react-movie.herokuapp.com/movies');
+        let genreRes = await axios.get('https://backend-react-movie.herokuapp.com/genres');
         console.log(res.data.movies);
         this.setState({
-            movies:res.data.movies
+            movies:res.data.movies,
+            genres:[...this.state.genres, ...genreRes.data.genres]
         })
 
     }
@@ -110,9 +114,13 @@ export default class Movies extends Component {
         let num = Number(e.target.value)
         this.setState({ limit: num })
     }
-
+    handleGenreChange=(genre)=>{
+        this.setState({
+            cGenre:genre
+        })
+    }
     render() {
-        let {movies,currSearchText, limit, currPage}=this.state;
+        let {movies,currSearchText, limit, currPage, genres, cGenre}=this.state;
         // let filterMovies =[];
         let filteredArr = [];
         if(currSearchText!='')
@@ -128,6 +136,13 @@ export default class Movies extends Component {
             filteredArr=movies;
         }
 
+        if(cGenre!='All Genres')
+        {
+            filteredArr = filteredArr.filter(function(movieObj){
+                return movieObj.genre.name==cGenre
+            })
+        }
+
         let numberOfPages= Math.ceil(filteredArr.length/limit);
         let pageNumberArr=[];
         for(let i=0;i<numberOfPages;i++){
@@ -136,13 +151,31 @@ export default class Movies extends Component {
         let si = (currPage - 1) * limit; //movies till prev page
         let ei = si + limit; //total movies, including movie numbers on current page
         filteredArr = filteredArr.slice(si, ei); // movie numbers on current page
-
+        
+        if(filteredArr.length==0 && movies.length!=0){
+            this.setState({
+                currPage:1
+            })
+        }
         return (
+            <>
+                {this.state.movies.length == 0 ? <div className="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div> :
             <div className='container'>
-                <div className='row'>
-                    <div className='col-3'>
-                        <h1>Hello</h1>
-                    </div>
+                        <div className='row'>
+                            <div className='col-3'>
+                                <ul className="list-group">
+                                 {
+                                     genres.map((genreObj)=>(
+                                         <li onClick={()=>this.handleGenreChange(genreObj.name)} key={genreObj._id} className='list-group-item'>
+                                             {genreObj.name}
+                                         </li>
+                                     ))
+                                 }
+                                </ul>
+                                <h5>Current Genre : {cGenre}</h5>
+                            </div>
                     <div className='col-9'>
                         <input onChange={this.handleChange} type='text'></input>
                         <table className="table">
@@ -199,7 +232,7 @@ export default class Movies extends Component {
                     </div>
                 </div>
             </div>
-
+    }</>
         )
     }
 }
