@@ -90,3 +90,7 @@ So we do this asyncronously in ComponentDidMount instead of constructor so that 
         1. Escape from boilerplate code of class components
         2. No more worry about handling .this
         3. Separation of logic
+    
+    eg:
+    1. useState():-Hook that lets us add state to functional components
+    
