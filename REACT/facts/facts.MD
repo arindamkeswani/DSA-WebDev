@@ -94,3 +94,18 @@ So we do this asyncronously in ComponentDidMount instead of constructor so that 
     eg:
     1. useState():-Hook that lets us add state to functional components
     
+----
+`2/7/21`
+- Hooks
+- The function returned by useState needs new object to update value in an object, unlike setState, which just overrides req value and the rest remains untouched. So we should use `spread (...)` operator to copy prev object then add our change, in order to prevent loss of values.
+- In functional components, there is no render() function (unline class components), and this entire func runs on changing the state
+- React keeps track of and does not initialise the useState again an again.
+- To use side effects within functional components using `useEffect`. 
+- It runs after every render.
+- 1st Variation [No dependency array]:
+    - useEffect = ComponentDidMount + ComponentDidUpdate (after every rendering)
+- 2nd Variation [With dependency array]:
+    - useEffect = ComponentDidMount (only one rendering)
+- 3rd Variation [non-empty dependency array]:
+    - useEffect runs only when value inside dependency array changes
+- ComponentDidUpdate runs in order to prevent malfunction of WillUnmount in case of multiple props, as otherwise latter will not be able to find changed values and unmount the componemt. It basically removes listener from prev component, and attaches it to the next value sent by the props
