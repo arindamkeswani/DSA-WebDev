@@ -4,7 +4,8 @@ import './App.css';
 // import Ue1 from './useEffect/Ue1';
 // import Ue2 from './useEffect/Ue2';
 // import Ue3 from './useEffect/Ue3';
-import Uewc  from './useEffect/cleanUp/Uewc';
+// import Uewc  from './useEffect/cleanUp/Uewc';
+import Main from './Context/Main';
 function App() {
   return (
     <>
@@ -13,7 +14,8 @@ function App() {
       {/* <Ue1 /> */}
       {/* <Ue2/> */}
       {/* <Ue3/> */}
-      <Uewc/>
+      {/* <Uewc/> */}
+      <Main></Main>
     </>
   );
 }

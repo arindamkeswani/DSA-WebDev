@@ -109,3 +109,21 @@ So we do this asyncronously in ComponentDidMount instead of constructor so that 
 - 3rd Variation [non-empty dependency array]:
     - useEffect runs only when value inside dependency array changes
 - ComponentDidUpdate runs in order to prevent malfunction of WillUnmount in case of multiple props, as otherwise latter will not be able to find changed values and unmount the componemt. It basically removes listener from prev component, and attaches it to the next value sent by the props
+
+----
+`3/7/21`
+- Context API: Provides a way to pass data through the component tree without having to pass props down manually at every level (props drilling). 
+- When to use Context API: It is designed to share data that can be considered global for a tree of React components, eg user auth, theme
+- `const MyContext = React.createContext(default value); //creates a context object`
+    
+    -> Consumption: Hook=>useContext
+    
+    -> `const val = useContext(value);`
+
+    -> MyContext.Provider overrides default value in useContext with the entered value (add consumption and subscription)
+
+    ->React.memo allows to prevent re-rendering of child (if consumption[useContext] is removed) when there is no value change in it (makes child and grandchild siblings)
+- Firebase: Backend as a service
+            ->APIs, storage, structure, authentication
+            
+            ->pre-existing functionalities (just need to consume, no need to get into the code)
