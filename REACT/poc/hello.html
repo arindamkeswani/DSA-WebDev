@@ -24,20 +24,28 @@
         )
     }
 
-    function Hellos(){
+    // function Hellos(){
 
-    return(
-        //JSX code only
-        //Below code can be wrapped in a div too, but that is unnecessary
-        <React.Fragment> 
-        <Hello person="Arindam" age="21"/>
-        <Hello person="Alexander"/>
-        <Hello/>
-        <Hello/>
-        </React.Fragment>
-        )
-    }
-    ReactDOM.render(<Hellos/>, document.getElementById('root'));
+    // return(
+    //     //JSX code only
+    //     //Below code can be wrapped in a div too, but that is unnecessary
+    //     <React.Fragment> 
+    //     <Hello person="Arindam" age="21"/>
+    //     <Hello person="Alexander"/>
+    //     <Hello/>
+    //     <Hello/>
+    //     </React.Fragment>
+    //     )
+    // }
+    ReactDOM.render((
+    <Router>
+        <div>
+            <Route path="/" render={Home} />
+            <Route path="/login" render={Login} />
+        </div>
+    </Router>),
+    document.getElementById('root')
+);
     
     </script>
 </body>
