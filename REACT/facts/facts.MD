@@ -127,3 +127,8 @@ So we do this asyncronously in ComponentDidMount instead of constructor so that 
             ->APIs, storage, structure, authentication
             
             ->pre-existing functionalities (just need to consume, no need to get into the code)
+
+----
+`10/7/21`
+
+In firestore, there are collections, that contain details of every user, which contains key value pairs for every attribute
