@@ -132,3 +132,9 @@ So we do this asyncronously in ComponentDidMount instead of constructor so that 
 `10/7/21`
 
 In firestore, there are collections, that contain details of every user, which contains key value pairs for every attribute
+
+----
+`16/7/21`
+
+- Play is asynchronous, pause is sync
+- We play the vid first, then pause it to prevent unfulfilled promise error
