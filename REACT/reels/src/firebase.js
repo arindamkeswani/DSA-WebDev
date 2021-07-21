@@ -22,6 +22,7 @@ const firestore = firebase.firestore();
 export const database={
     users: firestore.collection('users'), // for abstraction, and not exposing the entire firestore
     posts:firestore.collection('posts'),
+    comments:firestore.collection('comments'),
     getCurrentTimeStamp : firebase.firestore.FieldValue.serverTimestamp
 }
 
