@@ -1,0 +1,93 @@
+Class Vector{
+    //int data;
+    int size=2;
+    int arr[size];
+    Vector(int arr[]){
+        this.arr= arr;
+    }
+
+    void resize(int nSize){
+        int arr2[nSize];
+
+        for(int i=0; i<size; i++){
+            arr2[i]=arr[i];
+        }
+
+        arr=arr2;
+    }
+}
+
+--
+
+vector<int> a
+
+--
+i=0;
+int arr[]
+int size;
+
+void func(int arr[], int size, int idx){
+
+    if(idx==size){
+        return;
+    }
+
+    print(arr[i]);
+    func(arr, size, idx+1);
+}
+--
+
+directed
+count all possible paths between 2 vert.
+
+HashMap<Integer, ArrayList<Integer>> graph;
+
+DFS:
+Node1, Node2;
+
+static int count=0;
+boolean flag1=false;
+boolean flag2=false;
+int dfs(Node Node1,Node Node2, Node curr){
+    for(vert: graph.getKey()){ //access every vertice
+        for(child: graph.get(vert)){
+            if(dfs(Node1, Node2,child ) == 1){
+                flag1 =true;
+            }
+            if(dfs(Node1, Node2,child ) == 2){
+                flag2=true;
+            }
+            if(flag1==true && flag2){
+                count++;
+            }
+       }
+    }
+
+}
+--
+
+polygon
+sides;
+Point lies within polygon or not
+
+Find angle between adjacent edges
+plot points
+
+find nearest 2 points from the ploted points
+
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
