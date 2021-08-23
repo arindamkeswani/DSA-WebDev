@@ -28,7 +28,7 @@ Test:
 - Components: Independent and re-usable pieces of code, like functions in JS. When changes are made in a component, the whole page does not re-render unlike DOM, where the entire DOM tree is built again (reflow), which is an expensive process.
     1. Class components (for Dynamic components)
     2. Functional components (for Static components)
-    - Component name has to be a capital letter
+    - Component name has to start with a capital letter (convention)
 - JSX - Mixture of HTML and JS for syntax simplicity for developers. `Babel` (is a JSX compiler that converts it to JS, which is understood by Browser)
 - Return statement is compulsory (Only JSX allowed) 
 - State is an object used to store component details
@@ -50,7 +50,7 @@ To start React app after the installation is complete
 - Root is in index.html file
 - Empty the div inside App function
 - Arrays/object should not be directly mutated. Use spread operator `...` instead
-- If the parent gets re=rendered, the child gets re-rendered
+- If the parent gets re-rendered, the child gets re-rendered
 ----
 `13/06/21`
 
@@ -98,7 +98,7 @@ So we do this asyncronously in ComponentDidMount instead of constructor so that 
 `2/7/21`
 - Hooks
 - The function returned by useState needs new object to update value in an object, unlike setState, which just overrides req value and the rest remains untouched. So we should use `spread (...)` operator to copy prev object then add our change, in order to prevent loss of values.
-- In functional components, there is no render() function (unline class components), and this entire func runs on changing the state
+- In functional components, there is no render() function (unlike class components), and this entire func runs on changing the state
 - React keeps track of and does not initialise the useState again an again.
 - To use side effects within functional components using `useEffect`. 
 - It runs after every render.
